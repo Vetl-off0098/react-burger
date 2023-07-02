@@ -1,0 +1,14 @@
+.finalBlock {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 16px;
+}
+
+.totalPrice {
+  margin-right: 42px;
+}
+
+.digits {
+  margin-right: 10px;
+}

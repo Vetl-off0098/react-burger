@@ -1,0 +1,46 @@
+.constructorAndButton {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.burgerConstructor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 592px;
+  align-items: center;
+  height: fit-content;
+}
+
+.burgerConstructor__main {
+  max-height: 464px;
+  overflow-y: scroll;
+}
+
+.burgerConstructor__main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.burgerConstructor__main::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.burgerConstructor__main::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.moverAndElement {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  background-size: contain;
+  width: 13px;
+  height: 19px;
+}
+
+.constructorElement {
+  min-width: 536px;
+}

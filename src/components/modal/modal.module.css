@@ -1,0 +1,31 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  opacity: .6;
+}
+
+.modalBlock {
+  width: 720px;
+  height: 539px;
+  background-color: #1C1C21;
+  border: 1px solid #4C4CFF;
+  border-radius: 20px;
+  z-index: 100;
+  position: absolute;
+}
+
+.closeModal {
+  cursor: pointer;
+}

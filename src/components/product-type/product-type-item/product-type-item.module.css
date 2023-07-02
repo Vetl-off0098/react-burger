@@ -1,0 +1,39 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 272px;
+  cursor: pointer;
+  position: relative;
+}
+
+.item:hover {
+  outline: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 10px 10px 15px -12px;
+}
+
+.item:last-child {
+  margin-bottom: 40px;
+}
+
+.priceBlock {
+  display: flex;
+}
+
+.image {
+  max-width: 240px;
+  background-size: contain;
+}
+
+.name {
+  text-align: center;
+  height: 48px;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

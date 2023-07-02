@@ -1,0 +1,20 @@
+.burgerIngredientsBlock {
+  max-width: 600px;
+}
+
+.scrollBlock {
+  height: 82vh;
+  overflow-y: scroll;
+}
+
+.scrollBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollBlock::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.scrollBlock::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
