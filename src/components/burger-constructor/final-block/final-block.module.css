@@ -12,3 +12,51 @@
 .digits {
   margin-right: 10px;
 }
+
+.isLoading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  opacity: .6;
+}
+
+.loadText {
+  position: absolute;
+}
+
+.innerModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderId {
+  padding: 0 70px;
+  margin-top: 70px;
+  display: inline-block;
+}
+
+.img {
+  width: 120px;
+  height: 120px;
+  margin-top: 60px;
+}
+
+.notif {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80px;
+}

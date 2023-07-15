@@ -8,7 +8,12 @@ function Modal(props) {
       </section>
 
       <div className={styles.modalBlock}>
-        <span className={styles.closeModal} onClick={props.onClose}>Закрыть</span>
+        <div className={styles.closeModal} onClick={props.onClose}>
+          <div className={styles.stripeRight}/>
+
+          <div className={styles.stripeLeft}/>
+        </div>
+
         {props.children}
       </div>
     </section>

@@ -42,9 +42,55 @@ function ProductTypeItem(props) {
 
       {isModal && ReactDOM.createPortal(
         <Modal onClose={closeModal}>
-          Привет, мир!
+          <span className="text text_type_main-large">Детали ингредиента</span>
 
-          <span onClick={incrementCount}>{props.info.price}</span>
+          <div className={styles.innerModal}>
+            <img onClick={incrementCount} src={props.info.image} alt='' className={styles.imageModal}/>
+
+            <div className="text text_type_main-medium mt-4">{props.info.name}</div>
+
+            <div className={styles.PFC}>
+              <div className="">
+                <div className="text text_type_main-default text_color_inactive">
+                  Калории, ккал
+                </div>
+
+                <div className="text text_type_digits-default text_color_inactive">
+                  {props.info.price}
+                </div>
+              </div>
+
+              <div className="">
+                <div className="text text_type_main-small text_color_inactive">
+                  Белки, г
+                </div>
+
+                <div className="text text_type_digits-default text_color_inactive">
+                  {props.info.price}
+                </div>
+              </div>
+
+              <div className="">
+                <div className="text text_type_main-small text_color_inactive">
+                  Жиры, г
+                </div>
+
+                <div className="text text_type_digits-default text_color_inactive">
+                  {props.info.price}
+                </div>
+              </div>
+
+              <div className="">
+                <div className="text text_type_main-small text_color_inactive">
+                  Углеводы, г
+                </div>
+
+                <div className="text text_type_digits-default text_color_inactive">
+                  {props.info.price}
+                </div>
+              </div>
+            </div>
+          </div>
         </Modal>,
         root
       )}
