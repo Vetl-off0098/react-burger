@@ -12,6 +12,10 @@ function BurgerConstructor(props) {
     return acc;
   }, 0) + props.burger.bun.price;
 
+  const deleteElement = (item) => {
+    props.deleteIngredient(item);
+  }
+
   return(
     <section className={styles.constructorAndButton}>
       <section className={styles.burgerConstructor}>
@@ -34,7 +38,7 @@ function BurgerConstructor(props) {
                 price={item.price}
                 thumbnail={item.image}
                 extraClass={`ml-3 ${styles.constructorElement}`}
-                handleClose={props.deleteIngredient}
+                handleClose={() => deleteElement(item)}
               />
             </div>
           ))}

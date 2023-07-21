@@ -5,6 +5,7 @@ import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import ReactDOM from "react-dom";
 import Modal from "../../modal/modal";
 import orderStatus from "../../../images/done.png";
+import PropTypes from "prop-types";
 
 
 function FinalBlock(props) {
@@ -84,6 +85,10 @@ function FinalBlock(props) {
       )}
     </>
   )
+}
+
+FinalBlock.propTypes = {
+  totalPrice: PropTypes.number,
 }
 
 export default FinalBlock;
