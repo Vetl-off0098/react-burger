@@ -1,17 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './product-type-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../../modal/modal';
+import IngredientDetails from '../../ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
 
 function ProductTypeItem(props) {
-  // const [count, setCount] = React.useState(0);
   const [isModal, setIsModal] = React.useState(false);
 
   const incrementCount = () => {
-    // setCount(count + 1);
     props.pushIngredient(props.info);
     closeModal();
   };
@@ -19,8 +17,6 @@ function ProductTypeItem(props) {
   const closeModal = () => {
     setIsModal(false);
   }
-
-  const root = document.getElementById('root');
 
   return (
     <>
@@ -41,60 +37,9 @@ function ProductTypeItem(props) {
         }
       </section>
 
-      {isModal && ReactDOM.createPortal(
-        <Modal onClose={closeModal}>
-          <span className="text text_type_main-large">Детали ингредиента</span>
-
-          <div className={styles.innerModal}>
-            <img onClick={incrementCount} src={props.info.image} alt='' className={styles.imageModal}/>
-
-            <div className="text text_type_main-medium mt-4">{props.info.name}</div>
-
-            <div className={styles.PFC}>
-              <div className="">
-                <div className="text text_type_main-default text_color_inactive">
-                  Калории, ккал
-                </div>
-
-                <div className="text text_type_digits-default text_color_inactive">
-                  {props.info.calories}
-                </div>
-              </div>
-
-              <div className="">
-                <div className="text text_type_main-small text_color_inactive">
-                  Белки, г
-                </div>
-
-                <div className="text text_type_digits-default text_color_inactive">
-                  {props.info.proteins}
-                </div>
-              </div>
-
-              <div className="">
-                <div className="text text_type_main-small text_color_inactive">
-                  Жиры, г
-                </div>
-
-                <div className="text text_type_digits-default text_color_inactive">
-                  {props.info.fat}
-                </div>
-              </div>
-
-              <div className="">
-                <div className="text text_type_main-small text_color_inactive">
-                  Углеводы, г
-                </div>
-
-                <div className="text text_type_digits-default text_color_inactive">
-                  {props.info.carbohydrates}
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal>,
-        root
-      )}
+      {isModal && <Modal onClose={closeModal}>
+        <IngredientDetails incrementCount={incrementCount} info={props.info}/>
+      </Modal>}
     </>
   )
 }

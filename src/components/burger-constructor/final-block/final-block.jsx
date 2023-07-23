@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './final-block.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import ReactDOM from "react-dom";
 import Modal from "../../modal/modal";
+import OrderDetails from "../../order-details/order-details";
 import orderStatus from "../../../images/done.png";
 import PropTypes from "prop-types";
 
@@ -36,8 +36,6 @@ function FinalBlock(props) {
     setIsModal(false);
   }
 
-  const root = document.getElementById('root');
-
   return (
     <>
       {!isLoading ? (<section className={styles.finalBlock}>
@@ -66,23 +64,9 @@ function FinalBlock(props) {
         )
       }
 
-      {isModal && ReactDOM.createPortal(
-        <Modal onClose={closeModal}>
-          <div className={styles.innerModal}>
-            <span className={`text text_type_digits-large ${styles.orderId}`}>{orderId}</span>
-
-            <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
-
-            <img className={styles.img} src={orderStatus} alt="Done"/>
-
-            <div className={styles.notif}>
-              <p className="text text_type_main-small">Ваш заказ начали готовить</p>
-              <p className="text text_type_main-small text_color_inactive mt-2">Дождитесь готовности на орбитальной станции</p>
-            </div>
-          </div>
-        </Modal>,
-        root
-      )}
+      {isModal && <Modal onClose={closeModal}>
+        <OrderDetails orderId={orderId} orderStatus={orderStatus} />
+      </Modal>}
     </>
   )
 }
