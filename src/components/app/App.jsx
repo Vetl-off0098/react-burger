@@ -87,8 +87,8 @@ function App() {
         return
       } else {
         const newArr = items;
-        if (newArr.find(el => el.count === 1)) {
-          newArr.find(el => el.count === 1).count = 0;
+        if (newArr.find(el => el.count === 1 && el.type === 'bun')) {
+          newArr.find(el => el.count === 1 && el.type === 'bun').count = 0;
           setItems(newArr)
         }
         ingredient.count = 1;
