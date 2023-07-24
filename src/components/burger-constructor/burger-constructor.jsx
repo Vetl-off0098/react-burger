@@ -7,10 +7,16 @@ import PropTypes from "prop-types";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 function BurgerConstructor(props) {
-  const totalPrice = props.burger.burgerMain.reduce((acc, cur) => {
-    acc += cur.price;
-    return acc;
-  }, 0) + props.burger.bun.price;
+  const [totalPrice, setTotalPrice] = React.useState(0);
+
+  React.useMemo(() => {
+    const newTotalPrice = props.burger.burgerMain.reduce((acc, cur) => {
+      acc += cur.price;
+      return acc;
+    }, 0) + props.burger.bun.price;
+
+    setTotalPrice(newTotalPrice);
+  }, [props.burger])
 
   const deleteElement = (item) => {
     props.deleteIngredient(item);
@@ -18,7 +24,7 @@ function BurgerConstructor(props) {
 
   return(
     <section className={styles.constructorAndButton}>
-      <section className={styles.burgerConstructor}>
+      <div className={styles.burgerConstructor}>
         {props.burger.bun && <ConstructorElement
           type="top"
           isLocked={true}
@@ -28,7 +34,7 @@ function BurgerConstructor(props) {
           extraClass={'ml-3'}
         />}
 
-        {props.burger.burgerMain.length ? <section className={`${styles.burgerConstructor} ${styles.burgerConstructor__main}`}>
+        {props.burger.burgerMain.length ? <div className={`${styles.burgerConstructor} ${styles.burgerConstructor__main}`}>
           {props.burger.burgerMain.map((item, index) => (
             <div className={styles.moverAndElement} key={index}>
               <img src={vector} alt="" className={styles.image}/>
@@ -42,7 +48,7 @@ function BurgerConstructor(props) {
               />
             </div>
           ))}
-        </section> : ''}
+        </div> : ''}
 
         {props.burger.bun && <ConstructorElement
           type="bottom"
@@ -52,7 +58,7 @@ function BurgerConstructor(props) {
           thumbnail={props.burger.bun.image}
           extraClass={'ml-3'}
         />}
-      </section>
+      </div>
 
       <FinalBlock totalPrice={totalPrice}/>
     </section>

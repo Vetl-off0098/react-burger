@@ -5,6 +5,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../../modal/modal';
 import IngredientDetails from '../../ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
+import ingredients from "../../../utils/prop-types";
 
 function ProductTypeItem(props) {
   const [isModal, setIsModal] = React.useState(false);
@@ -20,7 +21,7 @@ function ProductTypeItem(props) {
 
   return (
     <>
-      <section className={`${styles.item} mt-6` } onClick={() => setIsModal(true)}>
+      <div className={`${styles.item} mt-6` } onClick={() => setIsModal(true)}>
         <img src={props.info.image} alt='' className={styles.image}/>
 
         <div className={ styles.priceBlock }>
@@ -35,7 +36,7 @@ function ProductTypeItem(props) {
           <Counter count={props.info.count} size="default" extraClass="m-1" />
         </span>
         }
-      </section>
+      </div>
 
       {isModal && <Modal onClose={closeModal}>
         <IngredientDetails incrementCount={incrementCount} info={props.info}/>
@@ -45,21 +46,7 @@ function ProductTypeItem(props) {
 }
 
 ProductTypeItem.propTypes = {
-  info: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    calories: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-    image_large: PropTypes.string,
-    _v: PropTypes.number
-  }),
-  // info: PropTypes.object,
+  info: PropTypes.shape(ingredients).isRequired,
   pushIngredient: PropTypes.func,
 }
 

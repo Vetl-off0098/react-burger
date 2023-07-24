@@ -9,7 +9,7 @@ function App() {
   React.useEffect(() => {
     setIsLoading(true);
     fetch(api)
-      .then(data => data.json())
+      .then(data => checkResponse(data))
       .then(response => {
         response.data = response.data.map(el => {
           return {
@@ -31,8 +31,11 @@ function App() {
         console.error(e);
         setIsLoading(false);
       })
-
   }, []);
+
+  const checkResponse = (res) => {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  };
 
   const burger = {
     bun: {

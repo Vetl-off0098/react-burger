@@ -12,7 +12,7 @@ function ButtonHeader(props) {
 }
 
 ButtonHeader.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.node
 }
 
 export default ButtonHeader;

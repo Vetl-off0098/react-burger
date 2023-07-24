@@ -13,8 +13,10 @@ function Modal(props) {
     }
   });
 
+  const ECK_KEYCODE = 27
+
   const closeModal = (keyPress) => {
-    if (keyPress.keyCode === 27) {
+    if (keyPress.keyCode === ECK_KEYCODE) {
       props.onClose();
     }
   }

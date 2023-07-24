@@ -38,7 +38,7 @@ function FinalBlock(props) {
 
   return (
     <>
-      {!isLoading ? (<section className={styles.finalBlock}>
+      {!isLoading ? (<div className={styles.finalBlock}>
         <p className={`${styles.totalPrice} text text_type_digits-medium`}>
         <span className={styles.digits}>
           {props.totalPrice}
@@ -50,17 +50,17 @@ function FinalBlock(props) {
         <Button onClick={openModal} htmlType="button" type="primary" size="medium">
           Оформить заказ
         </Button>
-      </section>)
+      </div>)
       :
         (
-          <section className={styles.isLoading}>
-            <section className={styles.overlay}>
-            </section>
+          <div className={styles.isLoading}>
+            <div className={styles.overlay}>
+            </div>
 
             <div className={styles.loadText}>
               <p className="text text_type_main-large">Загрузка...</p>
             </div>
-          </section>
+          </div>
         )
       }
 
