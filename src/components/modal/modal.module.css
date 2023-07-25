@@ -1,0 +1,55 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modalBlock {
+  min-width: 350px;
+  min-height: 500px;
+  background-color: #1C1C21;
+  border: 1px solid #4C4CFF;
+  border-radius: 40px;
+  z-index: 100;
+  position: absolute;
+  padding: 36px;
+  box-sizing: border-box;
+}
+
+.closeModal {
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stripe {
+
+}
+
+.stripeRight {
+  display: inline-block;
+  transform: rotate(135deg);
+  height: 25px;
+  width: 2px;
+  background-color: #F2F2F3;
+}
+
+.stripeLeft {
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 25px;
+  width: 2px;
+  background-color: #F2F2F3;
+  margin-left: -1.8px;
+}

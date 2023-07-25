@@ -1,0 +1,15 @@
+.App {
+  background-color: #131316;
+  box-sizing: border-box;
+  height: 114vh;
+  overflow-y: hidden;
+}
+
+.contentBlock {
+  display: block;
+}
+
+.ingredientsAndConstructor {
+  display: flex;
+  justify-content: space-between;
+}

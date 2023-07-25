@@ -1,0 +1,26 @@
+.button {
+  display: flex;
+  align-items: center;
+  width: 208px;
+  background-color: #1C1C21;
+  padding: 17px 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.button > p, svg {
+  transition: 0.4s;
+}
+
+.button:hover > p {
+  color: white !important;
+}
+
+.button:hover > svg {
+  fill:white;
+}
+
+.button p {
+  margin-left: 8px;
+}
