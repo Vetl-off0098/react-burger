@@ -4,11 +4,13 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import api from '../../utils/api';
+import checkResponse from '../../utils/check-response';
+import { BurgerConstructorContext } from '../../services/appContext';
 
 function App() {
   React.useEffect(() => {
     setIsLoading(true);
-    fetch(api)
+    fetch(`${api}/ingredients`)
       .then(data => checkResponse(data))
       .then(response => {
         response.data = response.data.map(el => {
@@ -17,7 +19,7 @@ function App() {
             count: 0
           }
         })
-        response.data.find(el => el.type === 'bun').count = 1
+        response.data.find(el => el.type === 'bun').count = 2
         setItems(response.data);
         setBurger(prev => ({
           ...prev,
@@ -33,9 +35,9 @@ function App() {
       })
   }, []);
 
-  const checkResponse = (res) => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-  };
+  // const checkResponse = (res) => {
+  //   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+  // };
 
   const burger = {
     bun: {
@@ -82,19 +84,32 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [burger1, setBurger] = React.useState(burger);
 
+  // function reducer(state, action) {
+  //   switch (action.type) {
+  //     case "increment":
+  //       return {
+  //         count: state.count + 1
+  //       };
+  //     case "decrement":
+  //       return { count: state.count - 1 };
+  //     default:
+  //       throw new Error(`Wrong type of action: ${action.type}`);
+  //   }
+  // }
+
   const pushIngredient = (item) => {
     const ingredient = items.find(el => el._id === item._id);
 
     if (ingredient.type === 'bun') {
-      if (ingredient.count === 1) {
+      if (ingredient.count === 2) {
         return
       } else {
         const newArr = items;
-        if (newArr.find(el => el.count === 1 && el.type === 'bun')) {
-          newArr.find(el => el.count === 1 && el.type === 'bun').count = 0;
+        if (newArr.find(el => el.count === 2 && el.type === 'bun')) {
+          newArr.find(el => el.count === 2 && el.type === 'bun').count = 0;
           setItems(newArr)
         }
-        ingredient.count = 1;
+        ingredient.count = 2;
       }
       setBurger({...burger1, bun: ingredient})
     } else {
@@ -136,7 +151,9 @@ function App() {
           <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
             <BurgerIngredients items={items} pushIngredient={pushIngredient}/>
 
-            <BurgerConstructor burger={burger1} deleteIngredient={deleteIngredient}/>
+            <BurgerConstructorContext.Provider value={burger1}>
+              <BurgerConstructor burger={burger1} deleteIngredient={deleteIngredient}/>
+            </BurgerConstructorContext.Provider>
           </section>
         </main>
       </div>)
