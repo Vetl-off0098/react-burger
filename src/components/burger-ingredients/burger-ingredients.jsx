@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import ProductType from "../product-type/product-type";
-import PropTypes from 'prop-types';
-import ingredients from "../../utils/prop-types";
+import {BurgerConstructorContext} from "../../services/appContext";
 
-function BurgerIngredients (props) {
+function BurgerIngredients () {
   const [current, setCurrent] = React.useState('one');
+  const items = useContext(BurgerConstructorContext).items;
+  const pushIngredient = useContext(BurgerConstructorContext).pushIngredient;
 
   return (
     <section className={styles.burgerIngredientsBlock}>
@@ -34,33 +35,29 @@ function BurgerIngredients (props) {
         <div id={'bun'}>
           <ProductType
             title={'Булки'}
-            items={props.items.filter(el => el.type === 'bun')}
-            pushIngredient={props.pushIngredient}
+            items={items.filter(el => el.type === 'bun')}
+            pushIngredient={pushIngredient}
           />
         </div>
 
         <div id={'sauce'}>
           <ProductType
             title={'Соусы'}
-            items={props.items.filter(el => el.type === 'sauce')}
-            pushIngredient={props.pushIngredient}
+            items={items.filter(el => el.type === 'sauce')}
+            pushIngredient={pushIngredient}
           />
         </div>
 
         <div id={'main'}>
           <ProductType
             title={'Начинка'}
-            items={props.items.filter(el => el.type === 'main')}
-            pushIngredient={props.pushIngredient}
+            items={items.filter(el => el.type === 'main')}
+            pushIngredient={pushIngredient}
           />
         </div>
       </div>
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape(ingredients).isRequired).isRequired,
 }
 
 export default BurgerIngredients;

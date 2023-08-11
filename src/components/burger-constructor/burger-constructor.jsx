@@ -3,15 +3,14 @@ import styles from './burger-constructor.module.css';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import vector from '../../images/Vector.png'
 import FinalBlock from './final-block/final-block';
-import PropTypes from "prop-types";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructorContext } from '../../services/appContext';
 
-function BurgerConstructor(props) {
-  const burger = useContext(BurgerConstructorContext);
+function BurgerConstructor() {
+  const burger = useContext(BurgerConstructorContext).burger;
+  const deleteIngredient = useContext(BurgerConstructorContext).deleteIngredient;
 
   const deleteElement = (item) => {
-    props.deleteIngredient(item);
+    deleteIngredient(item);
   }
 
   return(
@@ -55,10 +54,6 @@ function BurgerConstructor(props) {
       <FinalBlock/>
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  deleteIngredient: PropTypes.func
 }
 
 export default BurgerConstructor;

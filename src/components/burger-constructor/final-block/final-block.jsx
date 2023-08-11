@@ -14,7 +14,7 @@ function FinalBlock() {
   const [orderId, setOrderId] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const burger = useContext(BurgerConstructorContext);
+  const burger = useContext(BurgerConstructorContext).burger;
 
   React.useMemo(() => {
     const newTotalPrice = burger.burgerMain.reduce((acc, cur) => {

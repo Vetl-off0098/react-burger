@@ -35,11 +35,7 @@ function App() {
       })
   }, []);
 
-  // const checkResponse = (res) => {
-  //   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-  // };
-
-  const burger = {
+  const wholeBurger = {
     bun: {
       // _id: 1,
       // name:  'Краторная булка N-200i',
@@ -82,7 +78,7 @@ function App() {
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [burger1, setBurger] = React.useState(burger);
+  const [burger, setBurger] = React.useState(wholeBurger);
 
   // function reducer(state, action) {
   //   switch (action.type) {
@@ -111,14 +107,14 @@ function App() {
         }
         ingredient.count = 2;
       }
-      setBurger({...burger1, bun: ingredient})
+      setBurger({...burger, bun: ingredient})
     } else {
       ingredient.count = ingredient.count + 1;
 
-      const newArr = burger1.burgerMain;
+      const newArr = burger.burgerMain;
       newArr.push(ingredient);
 
-      setBurger({...burger1, burgerMain: newArr});
+      setBurger({...burger, burgerMain: newArr});
       setItems(prevState =>
         prevState.map(el => el._id === item._id ? {...el, count: ingredient.count} : el)
       )
@@ -126,11 +122,11 @@ function App() {
   };
 
   const deleteIngredient = item => {
-    const indexElement = burger1.burgerMain.findIndex(el => el._id === item._id);
-    const newArr = burger1.burgerMain;
+    const indexElement = burger.burgerMain.findIndex(el => el._id === item._id);
+    const newArr = burger.burgerMain;
 
     newArr.splice(indexElement, 1);
-    setBurger({...burger1, burgerMain: newArr});
+    setBurger({...burger, burgerMain: newArr});
 
     const ingredient = items.find(el => el._id === item._id);
     ingredient.count = ingredient.count - 1;
@@ -149,10 +145,16 @@ function App() {
           <h1 className="text text_type_main-large">Соберите бургер</h1>
 
           <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
-            <BurgerIngredients items={items} pushIngredient={pushIngredient}/>
+            <BurgerConstructorContext.Provider value={{
+              items, pushIngredient
+            }}>
+              <BurgerIngredients />
+            </BurgerConstructorContext.Provider>
 
-            <BurgerConstructorContext.Provider value={burger1}>
-              <BurgerConstructor burger={burger1} deleteIngredient={deleteIngredient}/>
+            <BurgerConstructorContext.Provider value={{
+              burger, deleteIngredient
+            }}>
+              <BurgerConstructor />
             </BurgerConstructorContext.Provider>
           </section>
         </main>
