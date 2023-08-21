@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import ProductType from "../product-type/product-type";
-import {BurgerConstructorContext} from "../../services/appContext";
+import {useSelector} from "react-redux";
 
 function BurgerIngredients () {
   const [current, setCurrent] = React.useState('one');
-  const items = useContext(BurgerConstructorContext).items;
-  const pushIngredient = useContext(BurgerConstructorContext).pushIngredient;
+
+  const ingredients = useSelector(state => state.ingredients.ingredients);
 
   return (
     <section className={styles.burgerIngredientsBlock}>
@@ -35,24 +35,21 @@ function BurgerIngredients () {
         <div id={'bun'}>
           <ProductType
             title={'Булки'}
-            items={items.filter(el => el.type === 'bun')}
-            pushIngredient={pushIngredient}
+            items={ingredients.filter(el => el.type === 'bun')}
           />
         </div>
 
         <div id={'sauce'}>
           <ProductType
             title={'Соусы'}
-            items={items.filter(el => el.type === 'sauce')}
-            pushIngredient={pushIngredient}
+            items={ingredients.filter(el => el.type === 'sauce')}
           />
         </div>
 
         <div id={'main'}>
           <ProductType
             title={'Начинка'}
-            items={items.filter(el => el.type === 'main')}
-            pushIngredient={pushIngredient}
+            items={ingredients.filter(el => el.type === 'main')}
           />
         </div>
       </div>
