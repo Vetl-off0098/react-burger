@@ -13,6 +13,7 @@ export const ingredientsReducer = (state = defaultState, action) => {
 		case ADD_INGREDIENTS:
 			return {...state, ingredients: [...action.payload]}
 		case INCREASE_COUNT_INGREDIENT:
+			console.log(action.payload)
 			const newArrInc = state.ingredients;
 			newArrInc.find(el => el._id === action.payload._id).count++;
 			return {...state, ingredients: [...newArrInc]}

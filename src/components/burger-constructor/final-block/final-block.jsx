@@ -1,20 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './final-block.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import orderStatus from "../../../images/done.png";
-import api from '../../../utils/api';
-import checkResponse from "../../../utils/check-response";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCreateOrder} from "../../../services/async-actions/ingredients";
+import {toggleOrderAction} from "../../../services/reducers/createdOrderReducer";
+import {isLoadingOrderAction} from "../../../services/reducers/isLoadingOrder";
 
 function FinalBlock() {
-  const [isModal, setIsModal] = React.useState(false);
-  const [orderId, setOrderId] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = React.useState(0);
   const burger = useSelector(state => state.burger.burger);
+  const isLoadingOrder = useSelector(state => state.isLoadingOrder.isLoadingOrder);
+  const isSuccess = useSelector(state => state.createdOrder.order.isSuccess);
+  const orderId = useSelector(state => state.createdOrder.order.orderId);
+  const isOpen = useSelector(state => state.createdOrder.order.isOpen);
 
   React.useMemo(() => {
     const newTotalPrice = burger.filter(el => el.type !== 'bun').reduce((acc, cur) => {
@@ -25,50 +28,27 @@ function FinalBlock() {
     setTotalPrice(newTotalPrice);
   }, [burger])
 
-  const openModal = () => {
-    setIsLoading(true);
-
-    fetch(`${api}/orders`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        'ingredients': [
-          burger.find(el => el.type === 'bun'),
-          burger.find(el => el.type === 'bun'),
-          ...burger.filter(el => el.type !== 'bun'),
-        ].map(el => el._id)
-      })
-    })
-      .then(data => checkResponse(data))
-      .then(data => {
-        setIsModal(data.success);
-        setOrderId(String(data.order.number));
-        setIsLoading(false);
-      })
-      .catch(e => {
-        console.log(e);
-        setIsLoading(false);
-      })
+  const handleClickCreateOrder = () => {
+    dispatch(isLoadingOrderAction(true))
+    dispatch(fetchCreateOrder(burger));
   }
 
   const closeModal = () => {
-    setIsModal(false);
+    dispatch(toggleOrderAction(false))
   }
 
   return (
     <>
-      {!isLoading ? (<div className={styles.finalBlock}>
+      {!isLoadingOrder ? (<div className={styles.finalBlock}>
         <p className={`${styles.totalPrice} text text_type_digits-medium`}>
-        <span className={styles.digits}>
-          {totalPrice}
-        </span>
+          <span className={styles.digits}>
+            {totalPrice}
+          </span>
 
           <CurrencyIcon type="primary" />
         </p>
 
-        <Button onClick={openModal} htmlType="button" type="primary" size="medium">
+        <Button onClick={() => handleClickCreateOrder()} htmlType="button" type="primary" size="medium">
           Оформить заказ
         </Button>
       </div>)
@@ -85,7 +65,7 @@ function FinalBlock() {
         )
       }
 
-      {isModal && <Modal onClose={closeModal}>
+      {isOpen && isSuccess && <Modal onClose={() => closeModal()}>
         <OrderDetails orderId={orderId} orderStatus={orderStatus} />
       </Modal>}
     </>

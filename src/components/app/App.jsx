@@ -6,6 +6,8 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/async-actions/ingredients";
 import {isLoadingAction} from "../../services/reducers/isLoadingReducer";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
   React.useEffect(() => {
@@ -27,11 +29,13 @@ function App() {
         <main className={`${styles.contentBlock} container mt-10` }>
           <h1 className="text text_type_main-large">Соберите бургер</h1>
 
-          <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
-            <BurgerIngredients />
+          <DndProvider backend={HTML5Backend}>
+            <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
+              <BurgerIngredients />
 
-            <BurgerConstructor />
-          </section>
+              <BurgerConstructor />
+            </section>
+          </DndProvider>
         </main>
       </div>)
       :

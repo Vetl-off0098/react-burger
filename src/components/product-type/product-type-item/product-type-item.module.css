@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   width: 272px;
-  cursor: pointer;
+  cursor: grab;
   position: relative;
 }
 

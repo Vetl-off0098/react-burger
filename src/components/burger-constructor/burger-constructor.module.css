@@ -30,17 +30,6 @@
   background-color: #8585AD;
 }
 
-.moverAndElement {
-  display: flex;
-  align-items: center;
-}
-
-.image {
-  background-size: contain;
-  width: 13px;
-  height: 19px;
-}
-
-.constructorElement {
-  min-width: 536px;
+.isDrop {
+  outline: #9390eed4 solid 1px;
 }

@@ -1,0 +1,17 @@
+.moverAndElement {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: auto;
+}
+
+.image {
+    background-size: contain;
+    width: 13px;
+    height: 19px;
+    cursor: grab;
+}
+
+.constructorElement {
+    min-width: 536px;
+}
