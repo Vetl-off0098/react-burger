@@ -11,7 +11,6 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
   React.useEffect(() => {
-    console.log('was called start')
     dispatch(isLoadingAction(true))
     dispatch(fetchIngredients());
   }, []);

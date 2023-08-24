@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import ProductType from "../product-type/product-type";
@@ -37,6 +37,18 @@ function BurgerIngredients () {
     setRootHeight(document.querySelector('.root').offsetHeight);
   }
 
+  const buns = useMemo(() => (
+    ingredients.filter(el => el.type === 'bun')
+  ), [ingredients]);
+
+  const sauces = useMemo(() => (
+    ingredients.filter(el => el.type === 'sauce')
+  ), [ingredients]);
+
+  const mains = useMemo(() => (
+    ingredients.filter(el => el.type === 'main')
+  ), [ingredients]);
+
   return (
     <section className={`${styles.burgerIngredientsBlock} root`}>
       <div className={`${styles.tab}`}>
@@ -63,21 +75,21 @@ function BurgerIngredients () {
         <div id={'bun'} ref={refBun}>
           <ProductType
             title={'Булки'}
-            items={ingredients.filter(el => el.type === 'bun')}
+            items={buns}
           />
         </div>
 
         <div id={'sauce'} ref={refSauce}>
           <ProductType
             title={'Соусы'}
-            items={ingredients.filter(el => el.type === 'sauce')}
+            items={sauces}
           />
         </div>
 
         <div id={'main'} ref={refMain}>
           <ProductType
             title={'Начинка'}
-            items={ingredients.filter(el => el.type === 'main')}
+            items={mains}
           />
         </div>
       </div>

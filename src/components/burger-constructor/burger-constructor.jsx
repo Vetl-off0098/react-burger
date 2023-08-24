@@ -73,7 +73,6 @@ function BurgerConstructor() {
   }
 
   const onDragEnd = (event) => {
-    console.log('onDragEnd', event);
     setActiveId(null);
 
     const { active, over } = event;

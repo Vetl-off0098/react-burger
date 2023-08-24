@@ -30,6 +30,8 @@ export const fetchIngredients = () => {
 }
 
 export const fetchCreateOrder = (burger) => {
+	const bun = burger.find(el => el.type === 'bun');
+
 	return function(dispatch) {
 		fetch(`${api}/orders`, {
 			method: 'POST',
@@ -38,8 +40,8 @@ export const fetchCreateOrder = (burger) => {
 			},
 			body: JSON.stringify({
 				'ingredients': [
-					burger.find(el => el.type === 'bun'),
-					burger.find(el => el.type === 'bun'),
+					bun,
+					bun,
 					...burger.filter(el => el.type !== 'bun'),
 				].map(el => el._id)
 			})

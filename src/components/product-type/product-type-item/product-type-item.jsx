@@ -32,7 +32,7 @@ function ProductTypeItem(props) {
       <div
         ref={dragRef}
         className={`${styles.item} mt-6` }
-        onClick={() => handleClickIngredient()}
+        onClick={handleClickIngredient}
       >
         <img src={props.info.image} alt='' className={styles.image}/>
 
