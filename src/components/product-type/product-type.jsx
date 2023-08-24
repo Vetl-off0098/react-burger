@@ -16,7 +16,6 @@ function ProductType(props) {
           <ProductTypeItem
             key={el._id}
             info={el}
-            pushIngredient={props.pushIngredient}
           />
         ))}
       </div>
@@ -27,7 +26,6 @@ function ProductType(props) {
 ProductType.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape(ingredients).isRequired).isRequired,
-  pushIngredient: PropTypes.func.isRequired,
 }
 
 export default ProductType;

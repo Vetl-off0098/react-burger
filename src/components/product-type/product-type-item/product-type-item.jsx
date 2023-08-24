@@ -6,14 +6,22 @@ import Modal from '../../modal/modal';
 import IngredientDetails from '../../ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
 import ingredients from "../../../utils/prop-types";
+import {useDispatch} from "react-redux";
+import {setViewedIngredientsAction} from "../../../services/reducers/viewedIngredient";
+import {useDrag} from "react-dnd";
 
 function ProductTypeItem(props) {
   const [isModal, setIsModal] = React.useState(false);
+  const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: {item: props.info}
+  });
 
-  const incrementCount = () => {
-    props.pushIngredient(props.info);
-    closeModal();
-  };
+  const handleClickIngredient = () => {
+    setIsModal(true);
+    dispatch(setViewedIngredientsAction(props.info))
+  }
 
   const closeModal = () => {
     setIsModal(false);
@@ -21,7 +29,11 @@ function ProductTypeItem(props) {
 
   return (
     <>
-      <div className={`${styles.item} mt-6` } onClick={() => setIsModal(true)}>
+      <div
+        ref={dragRef}
+        className={`${styles.item} mt-6` }
+        onClick={handleClickIngredient}
+      >
         <img src={props.info.image} alt='' className={styles.image}/>
 
         <div className={ styles.priceBlock }>
@@ -39,7 +51,7 @@ function ProductTypeItem(props) {
       </div>
 
       {isModal && <Modal onClose={closeModal}>
-        <IngredientDetails incrementCount={incrementCount} info={props.info}/>
+        <IngredientDetails onClose={closeModal}/>
       </Modal>}
     </>
   )
@@ -47,7 +59,6 @@ function ProductTypeItem(props) {
 
 ProductTypeItem.propTypes = {
   info: PropTypes.shape(ingredients).isRequired,
-  pushIngredient: PropTypes.func,
 }
 
 export default ProductTypeItem;
