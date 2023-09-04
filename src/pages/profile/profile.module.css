@@ -1,0 +1,26 @@
+.content {
+  display: flex;
+  margin-top: 120px;
+}
+.leftPart {
+  max-width: 320px;
+}
+.navigation {
+  display: flex;
+  flex-direction: column;
+}
+.description {
+  margin-top: 80px;
+}
+.rightPart {
+  margin-left: 60px;
+  display: flex;
+  flex-direction: column;
+}
+.buttonLink {
+  line-height: 60px;
+  color: #8585AD;
+}
+.buttonLink:hover {
+  color: white;
+}

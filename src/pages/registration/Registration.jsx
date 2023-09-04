@@ -2,8 +2,14 @@ import React, {useState} from 'react';
 import AppHeader from "../../components/app-header/app-header";
 import styles from './Registration.module.css';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {fetchRegistration} from "../../services/async-actions/registration";
 
 function Registration () {
+		const navigate = useNavigate();
+		const dispatch = useDispatch();
+
 		const [email, setEmail] = useState('');
 		const onChangeEmail = e => {
 				setEmail(e.target.value)
@@ -17,12 +23,12 @@ function Registration () {
 		const [name, setName] = React.useState('');
 		const inputRef = React.useRef(null);
 
-		const registration = () => {
-				console.log('registration');
+		const registration = async () => {
+				dispatch(fetchRegistration({email, password, name}, () => navigate('/', {replace: true})));
 		};
 
 		const goToLogin = () => {
-				console.log('login')
+				navigate('/login', { replace: true });
 		};
 
 		return (

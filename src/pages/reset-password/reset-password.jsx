@@ -2,8 +2,13 @@ import React, {useState} from 'react';
 import AppHeader from "../../components/app-header/app-header";
 import styles from './reset-password.module.css';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useNavigate} from "react-router-dom";
+import api from "../../utils/api";
+import checkResponse from "../../utils/check-response";
+import {getCookie} from "../../utils/cookie";
 
 function ResetPassword () {
+		const navigate = useNavigate();
 
 		const [password, setPassword] = useState('')
 		const onChangePassword = e => {
@@ -13,12 +18,34 @@ function ResetPassword () {
 		const [kode, setKode] = React.useState('');
 		const inputRef = React.useRef(null);
 
-		const registration = () => {
+		const saveNewPass = async () => {
 				console.log('registration');
+
+				await fetch(`${api}/password-reset/reset`, {
+						method: 'POST',
+						mode: 'cors',
+						cache: 'no-cache',
+						credentials: 'same-origin',
+						headers: {
+								'Content-Type': 'application/json'
+						},
+						redirect: 'follow',
+						referrerPolicy: 'no-referrer',
+						body: JSON.stringify({
+								password: password,
+								token: getCookie('refresh')
+						})
+				})
+						.then(data => checkResponse(data))
+						.then(data => {
+								console.log(data)
+								navigate('/login', {replace: true})
+						})
+						.catch(e => console.log(e))
 		};
 
 		const goToLogin = () => {
-				console.log('login')
+				navigate('/login', { replace: true });
 		};
 
 		return (
@@ -57,7 +84,7 @@ function ResetPassword () {
 														htmlType="button"
 														type="primary"
 														size="large"
-														onClick={registration}
+														onClick={saveNewPass}
 														extraClass="mt-6"
 												>
 														Сохранить

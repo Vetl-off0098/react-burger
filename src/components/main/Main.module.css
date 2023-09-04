@@ -1,0 +1,15 @@
+.Main {
+  background-color: #131316;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.contentBlock {
+  display: block;
+}
+
+.ingredientsAndConstructor {
+  display: flex;
+  justify-content: space-between;
+}

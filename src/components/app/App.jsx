@@ -1,45 +1,69 @@
-import React from 'react';
-import styles from './App.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchIngredients} from "../../services/async-actions/ingredients";
-import {isLoadingAction} from "../../services/reducers/isLoadingReducer";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
+import React, {useEffect} from 'react';
+import {Route, Routes, useNavigate} from "react-router-dom";
+import Main from "../main/Main";
+import Login from "../../pages/login/Login";
+import Registration from "../../pages/registration/Registration";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
+import ResetPassword from "../../pages/reset-password/reset-password";
+import {RequireAuth} from "../../hoc/RequireAuth";
+import Profile from "../../pages/profile/profile";
+import api from "../../utils/api";
+import {getCookie} from "../../utils/cookie";
+import checkResponse from "../../utils/check-response";
+import {addUserAction, setAuthChecked} from "../../services/reducers/userReducer";
+import {useDispatch} from "react-redux";
+import {RefreshTokenFetch} from "../../utils/refreshTokenFetch";
 
 function App() {
-  React.useEffect(() => {
-    dispatch(isLoadingAction(true))
-    dispatch(fetchIngredients());
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch(`${api}/auth/user`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + getCookie('token')
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+      });
+
+      const json = await checkResponse(data);
+      console.log(json)
+
+      dispatch(addUserAction(json.user));
+      dispatch(setAuthChecked(true));
+    }
+
+    fetchData()
+      .catch(e => {
+        console.error(e)
+        if (e.message === 'jwt expired') {
+          RefreshTokenFetch((params) => dispatch(addUserAction(params)));
+        } else {
+          navigate('/login', {replace: true})
+        }
+      });
   }, []);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const ingredients = useSelector(state => state.ingredients.ingredients);
-  const isLoading = useSelector(state => state.isLoading.isLoading);
-  const burger = useSelector(state => state.burger.burger);
 
   return (
-    <>
-      {!isLoading && ingredients.length && burger.length ? (<div className={`${styles.App}`}>
-        <AppHeader/>
-
-        <main className={`${styles.contentBlock} container mt-10` }>
-          <h1 className="text text_type_main-large">Соберите бургер</h1>
-
-          <DndProvider backend={HTML5Backend}>
-            <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
-              <BurgerIngredients />
-
-              <BurgerConstructor />
-            </section>
-          </DndProvider>
-        </main>
-      </div>)
-      :
-      (<p>Загрузка...</p>)}
-    </>
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registration" element={<Registration />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/profile" element={
+        <RequireAuth>
+          <Profile />
+        </RequireAuth>
+      } />
+    </Routes>
   );
 }
 

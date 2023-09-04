@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import AppHeader from "../../components/app-header/app-header";
 import styles from './Login.module.css';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {fetchLogin} from "../../services/async-actions/login";
+import {useDispatch} from "react-redux";
 
 function Login () {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const fromPage = location.state?.from?.pathname || '/';
+
   const [email, setEmail] = useState('');
   const onChangeEmail = e => {
     setEmail(e.target.value)
@@ -15,15 +24,15 @@ function Login () {
   };
 
   const logIn = () => {
-    console.log('logIn');
+    dispatch(fetchLogin({email, password}, () => navigate(fromPage, {replace: true})))
   };
 
   const goToRegistration = () => {
-    console.log('registration')
+    navigate('/registration', { replace: true });
   };
 
   const goToResetPass = () => {
-    console.log('reset pass')
+    navigate('/forgot-password', { replace: true });
   };
 
   return (
