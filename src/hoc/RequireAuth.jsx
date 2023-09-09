@@ -1,7 +1,7 @@
 import {useLocation, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
-const RequireAuth = ({children}) => {
+const RequireAuth = ({onlyUnAuth = false, component}) => {
 		const location = useLocation();
 		const isAuthChecked = useSelector(state => state.user.isAuthChecked);
 		const user = useSelector(state => state.user.user);
@@ -10,11 +10,21 @@ const RequireAuth = ({children}) => {
 				return null;
 		}
 
-		if (!user) {
-				return <Navigate to='/login' state={{from: location}} />
+		if (onlyUnAuth && user) {
+				console.log('was called 10')
+				console.log(location.state)
+				const { from } = location.state || { from: { pathname: "/" } };
+				return <Navigate to={from} />;
 		}
 
-		return children
+		if (!onlyUnAuth && !user) {
+				return <Navigate to="/login" state={{ from: location }} />;
+		}
+
+		return component
 }
 
-export {RequireAuth}
+export const OnlyAuth = RequireAuth;
+export const OnlyUnAuth = ({ component }) => (
+		<RequireAuth onlyUnAuth={true} component={component} />
+);

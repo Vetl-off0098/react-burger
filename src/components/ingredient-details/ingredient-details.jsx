@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './ingredient-details.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -8,29 +8,45 @@ import {
 } from "../../services/reducers/ingredientsReducer";
 import PropTypes from "prop-types";
 import {addBurgerIngredientsAction, removeBurgerIngredientByIdAction} from "../../services/reducers/burgerIngredients";
+import {useLocation} from "react-router-dom";
 
 function IngredientDetails(props) {
   const dispatch = useDispatch();
+
   const viewedIngredient = useSelector(state => state.viewedIngredient.viewedIngredient);
   const ingredients = useSelector(state => state.ingredients.ingredients);
   const burger = useSelector(state => state.burger.burger);
 
+  const location = useLocation();
+
+  const [ingredient, setIngredient] = useState({});
+
+  useEffect(() => {
+    if (Object.entries(viewedIngredient).length) {
+      setIngredient(viewedIngredient);
+    } else if (ingredients && ingredients.length){
+      const ingredientId = location.pathname.split('/ingredients/')[1];
+      const item = ingredients.find(el => el._id === ingredientId);
+      setIngredient(item)
+    }
+  }, [viewedIngredient, ingredients])
+
   const increaseIngredient = () => {
-    if (viewedIngredient.type === 'bun') {
-      if (burger.find(el => el._id === viewedIngredient._id)) {
+    if (ingredient.type === 'bun') {
+      if (burger.find(el => el._id === ingredient._id)) {
         props.onClose();
         return
       } else {
         dispatch(resetCountIngredientAction(burger.find(el => el.count === 2)));
         dispatch(removeBurgerIngredientByIdAction(burger.find(el => el.count === 2).burgerIngredientId))
 
-        dispatch(setCountIngredientBunAction(viewedIngredient))
+        dispatch(setCountIngredientBunAction(ingredient))
       }
     } else {
-      dispatch(increaseCountIngredientAction(viewedIngredient));
+      dispatch(increaseCountIngredientAction(ingredient));
     }
 
-    dispatch(addBurgerIngredientsAction({...ingredients.find(el => el._id === viewedIngredient._id), burgerIngredientId: Date.now()}));
+    dispatch(addBurgerIngredientsAction({...ingredients.find(el => el._id === ingredient._id), burgerIngredientId: Date.now()}));
     props.onClose();
   }
 
@@ -39,9 +55,9 @@ function IngredientDetails(props) {
       <span className="text text_type_main-large">Детали ингредиента</span>
 
       <div className={styles.innerModal}>
-        <img onClick={() => increaseIngredient()} src={viewedIngredient.image} alt='' className={styles.imageModal}/>
+        <img onClick={() => increaseIngredient()} src={ingredient.image} alt='' className={styles.imageModal}/>
 
-        <div className="text text_type_main-medium mt-4">{viewedIngredient.name}</div>
+        <div className="text text_type_main-medium mt-4">{ingredient.name}</div>
 
         <div className={styles.PFC}>
           <div className="">
@@ -50,7 +66,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.calories}
+              {ingredient.calories}
             </div>
           </div>
 
@@ -60,7 +76,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.proteins}
+              {ingredient.proteins}
             </div>
           </div>
 
@@ -70,7 +86,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.fat}
+              {ingredient.fat}
             </div>
           </div>
 
@@ -80,7 +96,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.carbohydrates}
+              {ingredient.carbohydrates}
             </div>
           </div>
         </div>

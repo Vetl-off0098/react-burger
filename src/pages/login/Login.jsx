@@ -24,7 +24,7 @@ function Login () {
   };
 
   const logIn = () => {
-    dispatch(fetchLogin({email, password}, () => navigate(fromPage, {replace: true})))
+    dispatch(fetchLogin({email, password}, () => navigate(fromPage, {state: location.state, replace: true})))
   };
 
   const goToRegistration = () => {

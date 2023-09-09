@@ -2,48 +2,19 @@ import React, {useEffect, useState} from 'react';
 import AppHeader from "../../components/app-header/app-header";
 import styles from './profile.module.css';
 import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {NavLink, useNavigate} from "react-router-dom";
-import {getCookie} from "../../utils/cookie";
-import api from "../../utils/api";
-import checkResponse from "../../utils/check-response";
-import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchLogOut} from "../../services/async-actions/logOut";
 
 function Profile () {
+		const user = useSelector(state => state.user.user);
+
 		useEffect(() => {
 				setName(user.name);
 				setEmail(user.email);
+		}, [user]);
 
-
-				// const fetchData = async () => {
-				// 		const data = await fetch(`${api}/auth/user`, {
-				// 				method: 'GET',
-				// 				mode: 'cors',
-				// 				cache: 'no-cache',
-				// 				credentials: 'same-origin',
-				// 				headers: {
-				// 						'Content-Type': 'application/json',
-				// 						Authorization: 'Bearer ' + getCookie('token')
-				// 				},
-				// 				redirect: 'follow',
-				// 				referrerPolicy: 'no-referrer',
-				// 		});
-				//
-				// 		const json = await checkResponse(data);
-				// 		console.log(json)
-				//
-				// 		setName(json.user.name);
-				// 		setEmail(json.user.email);
-				// }
-				//
-				// fetchData()
-				// 		.catch(e => {
-				// 				console.error(e)
-				// 				navigate('/login', {replace: true})
-				// 		});
-		}, []);
-
-		const user = useSelector(state => state.user.user);
-		const navigate = useNavigate();
+		const dispatch = useDispatch();
 
 		const [email, setEmail] = useState('');
 		const onChangeEmail = e => {
@@ -56,6 +27,10 @@ function Profile () {
 		};
 
 		const [name, setName] = React.useState('');
+
+		const logOut = () => {
+				dispatch(fetchLogOut())
+		}
 
 		return (
 				<>
@@ -77,11 +52,11 @@ function Profile () {
 																</p>
 														</NavLink>
 
-														<NavLink to="/login">
+														<div onClick={logOut} className={styles.logoutBtn}>
 																<p className={`text text_type_main-medium ${styles.buttonLink}`}>
 																		Выход
 																</p>
-														</NavLink>
+														</div>
 												</nav>
 
 												<div className={styles.description}>

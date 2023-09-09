@@ -7,7 +7,9 @@ import {useInView} from "react-intersection-observer";
 
 function BurgerIngredients () {
   const ingredients = useSelector(state => state.ingredients.ingredients);
-  const [rootHeight, setRootHeight] = useState(0)
+
+  const [rootHeight, setRootHeight] = useState(0);
+
   const [refBun, inViewBun] = useInView({
     root: document.querySelector('.root'), // 26% 70%
     rootMargin: `-${rootHeight*26/100}px 0px -${rootHeight*70/100}px 0px`,

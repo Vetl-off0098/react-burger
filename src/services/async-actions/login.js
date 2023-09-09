@@ -39,6 +39,8 @@ export const fetchLogin = (params, cb) => {
 
 								dispatch(addUserAction(data.user));
 								dispatch(setAuthChecked(true));
+
+								console.log('callback')
 								cb();
 						})
 						.catch(e => console.log(e))

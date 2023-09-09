@@ -3,26 +3,17 @@ import styles from './Main.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchIngredients} from "../../services/async-actions/ingredients";
-import {isLoadingAction} from "../../services/reducers/isLoadingReducer";
+import {useSelector} from "react-redux";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 
 function Main() {
-		React.useEffect(() => {
-				dispatch(isLoadingAction(true))
-				dispatch(fetchIngredients());
-		}, []);
-
-		const dispatch = useDispatch();
 		const ingredients = useSelector(state => state.ingredients.ingredients);
 		const isLoading = useSelector(state => state.isLoading.isLoading);
-		const burger = useSelector(state => state.burger.burger);
 
 		return (
 				<>
-						{!isLoading && ingredients.length && burger.length ? (<div className={`${styles.Main}`}>
+						{!isLoading && ingredients.length ? (<div className={`${styles.Main}`}>
 										<AppHeader/>
 
 										<main className={`${styles.contentBlock} container mt-10` }>

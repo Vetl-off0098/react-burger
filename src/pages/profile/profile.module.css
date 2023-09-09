@@ -24,3 +24,6 @@
 .buttonLink:hover {
   color: white;
 }
+.logoutBtn {
+  cursor: pointer;
+}

@@ -10,20 +10,24 @@ import {
 } from "../../services/reducers/ingredientsReducer";
 import {
   addBurgerIngredientsAction,
-  removeBurgerIngredientByIdAction,
+  removeBurgerIngredientByIdAction, setBurgerIngredientsArrayAction,
 } from "../../services/reducers/burgerIngredients";
 import {useDrop} from "react-dnd";
 import DraggableConstructorElement from "./draggeble-constructor-element/draggeble-constructor-element";
 import {closestCenter, DndContext, DragOverlay} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import DefaultConstructorElement from "../defaultConstructorElement/defaultConstructorElement";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+
   const burger = useSelector(state => state.burger.burger);
   const ingredients = useSelector(state => state.ingredients.ingredients);
+
   const [bun, setBun] = useState({});
   const [otherIngrs, setOtherIngr] = useState([]);
   const [activeId, setActiveId] = useState(null);
+
   const [{isHover}, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
@@ -35,7 +39,7 @@ function BurgerConstructor() {
   });
 
   useEffect(() => {
-    if (burger.filter(el => el.type === 'bun').length) {
+    if (burger.length && burger.filter(el => el.type === 'bun').length) {
       setBun(
         burger.find(el => el.type === 'bun')
       );
@@ -48,11 +52,15 @@ function BurgerConstructor() {
 
   const increaseIngredient = (item) => {
     if (item.type === 'bun') {
+      const burgerBun = burger.find(el => el.type === 'bun');
+
       if (burger.find(el => el._id === item._id)) {
         return
       } else {
-        dispatch(resetCountIngredientAction(burger.find(el => el.count === 2 && el.type === 'bun')));
-        dispatch(removeBurgerIngredientByIdAction(burger.find(el => el.count === 2 && el.type === 'bun').burgerIngredientId))
+        if (burger.length && burgerBun) {
+          dispatch(resetCountIngredientAction(burger.find(el => el.count === 2 && el.type === 'bun')));
+          dispatch(removeBurgerIngredientByIdAction(burger.find(el => el.count === 2 && el.type === 'bun').burgerIngredientId))
+        }
 
         dispatch(setCountIngredientBunAction(item))
       }
@@ -80,23 +88,32 @@ function BurgerConstructor() {
     if (active.id === over.id) {
       return;
     }
+
     setOtherIngr((ingrs) => {
       const oldIndex = ingrs.findIndex(i => i.burgerIngredientId === active.id);
       const newIndex = ingrs.findIndex(i => i.burgerIngredientId === over.id);
+
+      const newBurger = [burger.find(el => el.type === 'bun'), ...arrayMove(ingrs, oldIndex, newIndex)];
+      dispatch(setBurgerIngredientsArrayAction(newBurger))
+
       return arrayMove(ingrs, oldIndex, newIndex);
-    })
+    });
   }
 
   return(
     <section ref={dropTarget} className={styles.constructorAndButton}>
       <div className={styles.burgerConstructor}>
-        {bun && <ConstructorElement
+        {Object.entries(bun).length ? <ConstructorElement
           type="top"
           isLocked={true}
           text={bun.name}
           price={bun.price}
           thumbnail={bun.image}
           extraClass={`ml-3 ${isHover ? styles.isDrop : ''}`}
+        /> : <DefaultConstructorElement
+          type={"top"}
+          title={'Добавьте булку в конструктор'}
+          extraClass={`${isHover ? styles.isDrop : ''}`}
         />}
 
         {otherIngrs.length ? <div className={`${styles.burgerConstructor} ${styles.burgerConstructor__main}`}>
@@ -120,15 +137,23 @@ function BurgerConstructor() {
               ): null}
             </DragOverlay>
           </DndContext>
-        </div> : ''}
+        </div> : <DefaultConstructorElement
+          type={"main"}
+          title={'Добавьте начинку в конструктор'}
+          extraClass={`${isHover ? styles.isDrop : ''}`}
+        />}
 
-        {bun && <ConstructorElement
+        {Object.entries(bun).length ? <ConstructorElement
           type="bottom"
           isLocked={true}
           text={bun.name}
           price={bun.price}
           thumbnail={bun.image}
           extraClass={`ml-3 ${isHover ? styles.isDrop : ''}`}
+        /> : <DefaultConstructorElement
+          type={"bottom"}
+          title={'Добавьте булку в конструктор'}
+          extraClass={`${isHover ? styles.isDrop : ''}`}
         />}
       </div>
 

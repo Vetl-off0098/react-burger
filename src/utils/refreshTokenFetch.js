@@ -1,8 +1,8 @@
 import api from "./api";
-import {getCookie} from "./cookie";
+import {getCookie, setCookie} from "./cookie";
 import checkResponse from "./check-response";
 
-export const RefreshTokenFetch = (cb) => {
+export const RefreshTokenFetch = () => {
 		return fetch(`${api}/auth/token`, {
 				method: 'POST',
 				mode: 'cors',
@@ -20,7 +20,19 @@ export const RefreshTokenFetch = (cb) => {
 				.then(data => checkResponse(data))
 				.then(data => {
 						console.log(data);
-						cb(data.user)
+
+						let authToken;
+						let refreshToken;
+
+						if (data.accessToken) {
+								authToken = data.accessToken.split('Bearer ')[1];
+								setCookie('token', authToken);
+						}
+
+						if (data.refreshToken) {
+								refreshToken = data.refreshToken;
+								setCookie('refresh', refreshToken);
+						}
 				})
 				.catch(e => console.log(e))
 }
