@@ -11,9 +11,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchUser} from "../../services/async-actions/user";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import {isLoadingAction} from "../../services/reducers/isLoadingReducer";
+import {isLoadingAction} from "../../services/actions/isLoadingActions";
 import {fetchIngredients} from "../../services/async-actions/ingredients";
 import IngredientInfo from "../../pages/ingredient-info/ingredient-info";
+import Layout from "../layout/Layout";
 
 function App() {
   const navigate = useNavigate();
@@ -35,16 +36,17 @@ function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        {/*<Route path="/ingredient-info" element={<IngredientInfo />} />*/}
-        <Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
-        <Route path="/ingredients/:ingredientId" element={
-          <IngredientInfo />
-        } />
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+          <Route path="/ingredients/:ingredientId" element={
+            <IngredientInfo />
+          } />
+        </Route>
       </Routes>
 
       {background && (

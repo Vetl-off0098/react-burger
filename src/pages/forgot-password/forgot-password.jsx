@@ -1,7 +1,6 @@
 import React, {useState, useRef} from 'react';
-import AppHeader from "../../components/app-header/app-header";
 import styles from './forgot-password.module.css';
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
@@ -12,8 +11,8 @@ function ForgotPassword () {
 		const [email, setEmail] = useState('');
 		const inputRef = useRef(null);
 
-		const restore = async () => {
-				console.log('registration');
+		const restore = async (e) => {
+				e.preventDefault();
 
 				await fetch(`${api}/password-reset`, {
 						method: 'POST',
@@ -43,8 +42,6 @@ function ForgotPassword () {
 
 		return (
 				<>
-						<AppHeader/>
-
 						<main className={styles.forgot}>
 								<section className={styles.container}>
 										<div className={styles.formWrap}>
@@ -52,28 +49,22 @@ function ForgotPassword () {
 														Восстановление пароля
 												</h1>
 
-												<Input
-														type={'text'}
-														placeholder={'Укажите e-mail'}
-														onChange={e => setEmail(e.target.value)}
-														value={email}
-														name={'name'}
-														error={false}
-														ref={inputRef}
-														errorText={'Ошибка'}
-														size={'default'}
-														extraClass="mt-6"
-												/>
+												<form onSubmit={restore} className={styles.formWrap}>
+														<Input
+																type={'text'}
+																placeholder={'Укажите e-mail'}
+																onChange={e => setEmail(e.target.value)}
+																value={email}
+																name={'name'}
+																error={false}
+																ref={inputRef}
+																errorText={'Ошибка'}
+																size={'default'}
+																extraClass="mt-6"
+														/>
 
-												<Button
-														htmlType="button"
-														type="primary"
-														size="large"
-														onClick={restore}
-														extraClass="mt-6"
-												>
-														Восстановить
-												</Button>
+														<input type="submit" value={'Восстановить'} className="submitBtn mt-6" />
+												</form>
 										</div>
 
 										<div className="footer mt-20">

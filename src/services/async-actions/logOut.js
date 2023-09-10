@@ -1,8 +1,8 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 import {getCookie, setCookie} from "../../utils/cookie";
-import {addUserAction, setAuthChecked} from "../reducers/userReducer";
-import {setBurgerIngredientsArrayAction} from "../reducers/burgerIngredients";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
+import {setBurgerIngredientsArrayAction} from "../actions/burgerIngredientsActions";
 
 export const fetchLogOut = () => {
 		return function(dispatch) {

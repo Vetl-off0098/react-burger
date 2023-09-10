@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import AppHeader from "../../components/app-header/app-header";
 import styles from './reset-password.module.css';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
@@ -18,8 +17,8 @@ function ResetPassword () {
 		const [kode, setKode] = React.useState('');
 		const inputRef = React.useRef(null);
 
-		const saveNewPass = async () => {
-				console.log('registration');
+		const saveNewPass = async (e) => {
+				e.preventDefault();
 
 				await fetch(`${api}/password-reset/reset`, {
 						method: 'POST',
@@ -50,8 +49,6 @@ function ResetPassword () {
 
 		return (
 				<>
-						<AppHeader/>
-
 						<main className={styles.reset}>
 								<section className={styles.container}>
 										<div className={styles.formWrap}>
@@ -59,36 +56,30 @@ function ResetPassword () {
 														Восстановление пароля
 												</h1>
 
-												<PasswordInput
-														placeholder={'Введите новый пароль'}
-														onChange={onChangePassword}
-														value={password}
-														name={'password'}
-														extraClass="mt-6"
-												/>
+												<form onSubmit={saveNewPass} className={styles.formWrap}>
+														<PasswordInput
+																placeholder={'Введите новый пароль'}
+																onChange={onChangePassword}
+																value={password}
+																name={'password'}
+																extraClass="mt-6"
+														/>
 
-												<Input
-														type={'text'}
-														placeholder={'Укажите код из письма'}
-														onChange={e => setKode(e.target.value)}
-														value={kode}
-														name={'name'}
-														error={false}
-														ref={inputRef}
-														errorText={'Ошибка'}
-														size={'default'}
-														extraClass="mt-6"
-												/>
+														<Input
+																type={'text'}
+																placeholder={'Укажите код из письма'}
+																onChange={e => setKode(e.target.value)}
+																value={kode}
+																name={'name'}
+																error={false}
+																ref={inputRef}
+																errorText={'Ошибка'}
+																size={'default'}
+																extraClass="mt-6"
+														/>
 
-												<Button
-														htmlType="button"
-														type="primary"
-														size="large"
-														onClick={saveNewPass}
-														extraClass="mt-6"
-												>
-														Сохранить
-												</Button>
+														<input type="submit" value={'Сохранить'} className="submitBtn mt-6" />
+												</form>
 										</div>
 
 										<div className="footer mt-20">

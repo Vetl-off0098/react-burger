@@ -7,11 +7,11 @@ import {
   decreaseCountIngredientAction, increaseCountIngredientAction,
   resetCountIngredientAction,
   setCountIngredientBunAction
-} from "../../services/reducers/ingredientsReducer";
+} from "../../services/actions/ingredientsAction";
 import {
   addBurgerIngredientsAction,
   removeBurgerIngredientByIdAction, setBurgerIngredientsArrayAction,
-} from "../../services/reducers/burgerIngredients";
+} from "../../services/actions/burgerIngredientsActions";
 import {useDrop} from "react-dnd";
 import DraggableConstructorElement from "./draggeble-constructor-element/draggeble-constructor-element";
 import {closestCenter, DndContext, DragOverlay} from "@dnd-kit/core";
@@ -89,15 +89,11 @@ function BurgerConstructor() {
       return;
     }
 
-    setOtherIngr((ingrs) => {
-      const oldIndex = ingrs.findIndex(i => i.burgerIngredientId === active.id);
-      const newIndex = ingrs.findIndex(i => i.burgerIngredientId === over.id);
+    const oldIndex = otherIngrs.findIndex(i => i.burgerIngredientId === active.id);
+    const newIndex = otherIngrs.findIndex(i => i.burgerIngredientId === over.id);
 
-      const newBurger = [burger.find(el => el.type === 'bun'), ...arrayMove(ingrs, oldIndex, newIndex)];
-      dispatch(setBurgerIngredientsArrayAction(newBurger))
-
-      return arrayMove(ingrs, oldIndex, newIndex);
-    });
+    const newBurger = [burger.find(el => el.type === 'bun'), ...arrayMove(otherIngrs, oldIndex, newIndex)];
+    dispatch(setBurgerIngredientsArrayAction(newBurger))
   }
 
   return(
@@ -106,7 +102,7 @@ function BurgerConstructor() {
         {Object.entries(bun).length ? <ConstructorElement
           type="top"
           isLocked={true}
-          text={bun.name}
+          text={bun.name + ' (верх)'}
           price={bun.price}
           thumbnail={bun.image}
           extraClass={`ml-3 ${isHover ? styles.isDrop : ''}`}
@@ -146,7 +142,7 @@ function BurgerConstructor() {
         {Object.entries(bun).length ? <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={bun.name}
+          text={bun.name + ' (низ)'}
           price={bun.price}
           thumbnail={bun.image}
           extraClass={`ml-3 ${isHover ? styles.isDrop : ''}`}

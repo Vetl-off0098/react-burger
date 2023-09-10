@@ -1,7 +1,7 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 import {getCookie} from "../../utils/cookie";
-import {addUserAction, setAuthChecked} from "../reducers/userReducer";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
 import {RefreshTokenFetch} from "../../utils/refreshTokenFetch";
 
 export const fetchUser = () => {

@@ -1,6 +1,6 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
-import {addUserAction, setAuthChecked} from "../reducers/userReducer";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
 import {setCookie} from "../../utils/cookie";
 
 export const fetchRegistration = (params, cb) => {

@@ -1,9 +1,9 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
-import {addIngredientsAction, setCountIngredientAction} from "../reducers/ingredientsReducer";
-import {isLoadingAction} from "../reducers/isLoadingReducer";
-import {createOrderAction} from "../reducers/createdOrderReducer";
-import {isLoadingOrderAction} from "../reducers/isLoadingOrder";
+import {addIngredientsAction, setCountIngredientAction} from "../actions/ingredientsAction";
+import {isLoadingAction} from "../actions/isLoadingActions";
+import {createOrderAction} from "../actions/createdOrderActions";
+import {isLoadingOrderAction} from "../actions/isLoadingOrderActions";
 
 export const fetchIngredients = (burger) => {
 		return function(dispatch) {

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import AppHeader from "../../components/app-header/app-header";
 import styles from './Registration.module.css';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
@@ -23,7 +22,8 @@ function Registration () {
 		const [name, setName] = React.useState('');
 		const inputRef = React.useRef(null);
 
-		const registration = async () => {
+		const registration = async (e) => {
+				e.preventDefault();
 				dispatch(fetchRegistration({email, password, name}, () => navigate('/', {replace: true})));
 		};
 
@@ -33,8 +33,6 @@ function Registration () {
 
 		return (
 				<>
-						<AppHeader/>
-
 						<main className={styles.reg}>
 								<section className={styles.container}>
 										<div className={styles.formWrap}>
@@ -42,43 +40,37 @@ function Registration () {
 														Регистрация
 												</h1>
 
-												<Input
-														type={'text'}
-														placeholder={'Имя'}
-														onChange={e => setName(e.target.value)}
-														value={name}
-														name={'name'}
-														error={false}
-														ref={inputRef}
-														errorText={'Ошибка'}
-														size={'default'}
-														extraClass="mt-6"
-												/>
+												<form onSubmit={registration} className={styles.formWrap}>
+														<Input
+																type={'text'}
+																placeholder={'Имя'}
+																onChange={e => setName(e.target.value)}
+																value={name}
+																name={'name'}
+																error={false}
+																ref={inputRef}
+																errorText={'Ошибка'}
+																size={'default'}
+																extraClass="mt-6"
+														/>
 
-												<EmailInput
-														onChange={onChangeEmail}
-														value={email}
-														name={'email'}
-														isIcon={false}
-														extraClass="mt-6"
-												/>
+														<EmailInput
+																onChange={onChangeEmail}
+																value={email}
+																name={'email'}
+																isIcon={false}
+																extraClass="mt-6"
+														/>
 
-												<PasswordInput
-														onChange={onChangePassword}
-														value={password}
-														name={'password'}
-														extraClass="mt-6"
-												/>
+														<PasswordInput
+																onChange={onChangePassword}
+																value={password}
+																name={'password'}
+																extraClass="mt-6"
+														/>
 
-												<Button
-														htmlType="button"
-														type="primary"
-														size="large"
-														onClick={registration}
-														extraClass="mt-6"
-												>
-														Зарегистрироваться
-												</Button>
+														<input type="submit" value={'Зарегистрироваться'} className="submitBtn mt-6" />
+												</form>
 										</div>
 
 										<div className="footer mt-20">

@@ -12,5 +12,3 @@ export const isLoadingReducer = (state = defaultState, action) => {
 			return state
 	}
 }
-
-export const isLoadingAction = (payload) => ({type: SET_IS_LOADING, payload})

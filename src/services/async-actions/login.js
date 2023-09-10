@@ -1,7 +1,7 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 import {setCookie} from "../../utils/cookie";
-import {addUserAction, setAuthChecked} from "../reducers/userReducer";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
 
 export const fetchLogin = (params, cb) => {
 		return function(dispatch) {

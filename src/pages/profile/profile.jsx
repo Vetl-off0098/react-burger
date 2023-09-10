@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import AppHeader from "../../components/app-header/app-header";
 import styles from './profile.module.css';
 import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
@@ -34,8 +33,6 @@ function Profile () {
 
 		return (
 				<>
-						<AppHeader/>
-
 						<main className={`container`}>
 								<section className={styles.content}>
 										<article className={styles.leftPart}>

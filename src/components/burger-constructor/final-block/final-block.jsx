@@ -7,8 +7,8 @@ import OrderDetails from "../../order-details/order-details";
 import orderStatus from "../../../images/done.png";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCreateOrder} from "../../../services/async-actions/ingredients";
-import {toggleOrderAction} from "../../../services/reducers/createdOrderReducer";
-import {isLoadingOrderAction} from "../../../services/reducers/isLoadingOrder";
+import {toggleOrderAction} from "../../../services/actions/createdOrderActions";
+import {isLoadingOrderAction} from "../../../services/actions/isLoadingOrderActions";
 import {useNavigate} from "react-router-dom";
 
 function FinalBlock() {

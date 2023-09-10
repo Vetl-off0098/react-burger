@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import AppHeader from "../../components/app-header/app-header";
 import styles from './Login.module.css';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {fetchLogin} from "../../services/async-actions/login";
@@ -23,7 +22,8 @@ function Login () {
     setPassword(e.target.value)
   };
 
-  const logIn = () => {
+  const logIn = (e) => {
+    e.preventDefault();
     dispatch(fetchLogin({email, password}, () => navigate(fromPage, {state: location.state, replace: true})))
   };
 
@@ -37,8 +37,6 @@ function Login () {
 
   return (
     <>
-      <AppHeader/>
-
       <main className={styles.login}>
         <section className={styles.container}>
           <div className={styles.formWrap}>
@@ -46,30 +44,24 @@ function Login () {
               Вход
             </h1>
 
-            <EmailInput
-              onChange={onChangeEmail}
-              value={email}
-              name={'email'}
-              isIcon={false}
-              extraClass="mt-6"
-            />
+            <form onSubmit={logIn} className={styles.formWrap}>
+              <EmailInput
+                onChange={onChangeEmail}
+                value={email}
+                name={'email'}
+                isIcon={false}
+                extraClass="mt-6"
+              />
 
-            <PasswordInput
-              onChange={onChangePassword}
-              value={password}
-              name={'password'}
-              extraClass="mt-6"
-            />
+              <PasswordInput
+                onChange={onChangePassword}
+                value={password}
+                name={'password'}
+                extraClass="mt-6"
+              />
 
-            <Button
-              htmlType="button"
-              type="primary"
-              size="large"
-              onClick={logIn}
-              extraClass="mt-6"
-            >
-              Войти
-            </Button>
+              <input type="submit" value={'Войти'} className="submitBtn mt-6" />
+            </form>
           </div>
 
           <div className="footer mt-20">
