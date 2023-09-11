@@ -3,8 +3,8 @@ const user = {
 		isAuthChecked: false,
 }
 
-const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
-const ADD_USER = 'ADD_USER';
+export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
+export const ADD_USER = 'ADD_USER';
 
 export const userReducer = (state = user, action) => {
 		switch (action.type) {

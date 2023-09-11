@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import styles from './reset-password.module.css';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
-import api from "../../utils/api";
-import checkResponse from "../../utils/check-response";
-import {getCookie} from "../../utils/cookie";
+import {useDispatch} from "react-redux";
+import {fetchResetPassword} from "../../services/async-actions/resetPassword";
 
 function ResetPassword () {
 		const navigate = useNavigate();
+		const dispatch = useDispatch();
 
 		const [password, setPassword] = useState('')
 		const onChangePassword = e => {
@@ -19,28 +19,7 @@ function ResetPassword () {
 
 		const saveNewPass = async (e) => {
 				e.preventDefault();
-
-				await fetch(`${api}/password-reset/reset`, {
-						method: 'POST',
-						mode: 'cors',
-						cache: 'no-cache',
-						credentials: 'same-origin',
-						headers: {
-								'Content-Type': 'application/json'
-						},
-						redirect: 'follow',
-						referrerPolicy: 'no-referrer',
-						body: JSON.stringify({
-								password: password,
-								token: getCookie('refresh')
-						})
-				})
-						.then(data => checkResponse(data))
-						.then(data => {
-								console.log(data)
-								navigate('/login', {replace: true})
-						})
-						.catch(e => console.log(e))
+				dispatch(fetchResetPassword(password, kode, () => navigate('/login', {replace: true})));
 		};
 
 		const goToLogin = () => {

@@ -29,8 +29,8 @@ export const fetchLogOut = () => {
 								dispatch(addUserAction(null));
 								dispatch(setAuthChecked(true));
 
-								setCookie('token', null);
-								setCookie('refresh', null);
+								// setCookie('token', null);
+								// setCookie('refresh', null);
 						})
 						.catch(e => console.log(e))
 		}

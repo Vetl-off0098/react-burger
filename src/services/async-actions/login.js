@@ -22,8 +22,6 @@ export const fetchLogin = (params, cb) => {
 				})
 						.then(data => checkResponse(data))
 						.then(data => {
-								console.log(data)
-
 								let authToken;
 								let refreshToken;
 
@@ -40,7 +38,6 @@ export const fetchLogin = (params, cb) => {
 								dispatch(addUserAction(data.user));
 								dispatch(setAuthChecked(true));
 
-								console.log('callback')
 								cb();
 						})
 						.catch(e => console.log(e))

@@ -2,7 +2,7 @@ const defaultState = {
 	isLoading: false,
 }
 
-const SET_IS_LOADING = 'SET_IS_LOADING';
+export const SET_IS_LOADING = 'SET_IS_LOADING';
 
 export const isLoadingReducer = (state = defaultState, action) => {
 	switch(action.type) {
