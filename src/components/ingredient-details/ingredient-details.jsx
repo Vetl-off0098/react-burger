@@ -1,47 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './ingredient-details.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {
-  increaseCountIngredientAction,
-  resetCountIngredientAction,
-  setCountIngredientBunAction
-} from "../../services/reducers/ingredientsReducer";
+import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import {addBurgerIngredientsAction, removeBurgerIngredientByIdAction} from "../../services/reducers/burgerIngredients";
+import {useParams} from "react-router-dom";
 
-function IngredientDetails(props) {
-  const dispatch = useDispatch();
-  const viewedIngredient = useSelector(state => state.viewedIngredient.viewedIngredient);
+function IngredientDetails() {
   const ingredients = useSelector(state => state.ingredients.ingredients);
-  const burger = useSelector(state => state.burger.burger);
+  const [ingredient, setIngredient] = useState({});
+  const {ingredientId} = useParams();
 
-  const increaseIngredient = () => {
-    if (viewedIngredient.type === 'bun') {
-      if (burger.find(el => el._id === viewedIngredient._id)) {
-        props.onClose();
-        return
-      } else {
-        dispatch(resetCountIngredientAction(burger.find(el => el.count === 2)));
-        dispatch(removeBurgerIngredientByIdAction(burger.find(el => el.count === 2).burgerIngredientId))
-
-        dispatch(setCountIngredientBunAction(viewedIngredient))
-      }
-    } else {
-      dispatch(increaseCountIngredientAction(viewedIngredient));
+  useEffect(() => {
+    if (ingredients && ingredients.length){
+      const item = ingredients.find(el => el._id === ingredientId);
+      setIngredient(item)
     }
-
-    dispatch(addBurgerIngredientsAction({...ingredients.find(el => el._id === viewedIngredient._id), burgerIngredientId: Date.now()}));
-    props.onClose();
-  }
+  }, [ingredients])
 
   return (
     <>
       <span className="text text_type_main-large">Детали ингредиента</span>
 
       <div className={styles.innerModal}>
-        <img onClick={() => increaseIngredient()} src={viewedIngredient.image} alt='' className={styles.imageModal}/>
+        <img src={ingredient.image} alt='' className={styles.imageModal}/>
 
-        <div className="text text_type_main-medium mt-4">{viewedIngredient.name}</div>
+        <div className="text text_type_main-medium mt-4">{ingredient.name}</div>
 
         <div className={styles.PFC}>
           <div className="">
@@ -50,7 +32,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.calories}
+              {ingredient.calories}
             </div>
           </div>
 
@@ -60,7 +42,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.proteins}
+              {ingredient.proteins}
             </div>
           </div>
 
@@ -70,7 +52,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.fat}
+              {ingredient.fat}
             </div>
           </div>
 
@@ -80,7 +62,7 @@ function IngredientDetails(props) {
             </div>
 
             <div className="text text_type_digits-default text_color_inactive">
-              {viewedIngredient.carbohydrates}
+              {ingredient.carbohydrates}
             </div>
           </div>
         </div>

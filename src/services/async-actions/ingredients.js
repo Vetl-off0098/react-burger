@@ -1,32 +1,40 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
-import {addIngredientsAction} from "../reducers/ingredientsReducer";
-import {isLoadingAction} from "../reducers/isLoadingReducer";
-import {setBurgerIngredientsAction} from "../reducers/burgerIngredients";
-import {createOrderAction} from "../reducers/createdOrderReducer";
-import {isLoadingOrderAction} from "../reducers/isLoadingOrder";
+import {addIngredientsAction, setCountIngredientAction} from "../actions/ingredientsAction";
+import {isLoadingAction} from "../actions/isLoadingActions";
+import {createOrderAction} from "../actions/createdOrderActions";
+import {isLoadingOrderAction} from "../actions/isLoadingOrderActions";
 
-export const fetchIngredients = () => {
-	return function(dispatch) {
-		fetch(`${api}/ingredients`)
-			.then(data => checkResponse(data))
-			.then(response => {
-				response.data = response.data.map(el => {
-					return {
-						...el,
-						count: 0
-					}
-				})
-				response.data.find(el => el.type === 'bun').count = 2;
-				dispatch(addIngredientsAction(response.data));
-				dispatch(setBurgerIngredientsAction({...response.data.find(el => el.type === 'bun'), burgerIngredientId: Date.now()}));
-				dispatch(isLoadingAction(false));
-			})
-			.catch(e => {
-				console.error(e);
-				dispatch(isLoadingAction(false));
-			})
-	}
+export const fetchIngredients = (burger) => {
+		return function(dispatch) {
+				fetch(`${api}/ingredients`)
+						.then(data => checkResponse(data))
+						.then(response => {
+								response.data = response.data.map(el => {
+										return {
+												...el,
+												count: 0
+										}
+								})
+								console.log('Set count 0')
+								console.log(burger)
+								dispatch(addIngredientsAction(response.data));
+
+								if (burger && burger.length) {
+										burger.forEach(el => {
+												let ingredient = response.data.find(item => item._id === el._id);
+
+												if (ingredient) {
+														dispatch(setCountIngredientAction({ingredient, newCount: el.count}))
+												}
+										})
+								}
+						})
+						.catch(e => {
+								console.error(e);
+						})
+						.finally(() => dispatch(isLoadingAction(false)))
+		}
 }
 
 export const fetchCreateOrder = (burger) => {

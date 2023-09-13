@@ -3,6 +3,7 @@ import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ButtonHeader from "./button-header/button-header";
+import {NavLink} from "react-router-dom";
 
 function AppHeader() {
   const display = {
@@ -15,12 +16,14 @@ function AppHeader() {
           <nav>
             <ul className={ styles.buttonsBlock }>
               <li>
-                <ButtonHeader>
-                  <BurgerIcon type={ display.visible === 'burgerConstructor' ? 'primary' : 'secondary' } />
-                  <p className={`text text_type_main-default ${display.visible === 'burgerConstructor' ? 'standartText' : 'secondaryText'}`}>
-                    Конструктор
-                  </p>
-                </ButtonHeader>
+                <NavLink to="/">
+                  <ButtonHeader>
+                    <BurgerIcon type={'secondary'} />
+                    <p className={`text text_type_main-default secondaryText`}>
+                      Конструктор
+                    </p>
+                  </ButtonHeader>
+                </NavLink>
               </li>
 
               <li>
@@ -40,20 +43,22 @@ function AppHeader() {
             <ul className={ styles.buttonsBlock }>
               <li className={ styles.hiddenBlock }>
                 <ButtonHeader>
-                  <ProfileIcon type='primary' />
-                  <p className='text text_type_main-default standartText'>
+                  <ProfileIcon type='secondary' />
+                  <p className='text text_type_main-default secondaryText'>
                     Личный кабинет
                   </p>
                 </ButtonHeader>
               </li>
 
               <li>
-                <ButtonHeader>
-                  <ProfileIcon type={ display.visible === 'userArea' ? 'primary' : 'secondary' } />
-                  <p className={`text text_type_main-default ${display.visible === 'userArea' ? 'standartText' : 'secondaryText'}`}>
-                    Личный кабинет
-                  </p>
-                </ButtonHeader>
+                <NavLink to="/profile">
+                  <ButtonHeader>
+                    <ProfileIcon type={'secondary'} />
+                    <p className={`text text_type_main-default secondaryText`}>
+                      Личный кабинет
+                    </p>
+                  </ButtonHeader>
+                </NavLink>
               </li>
             </ul>
           </nav>

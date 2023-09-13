@@ -1,0 +1,32 @@
+.info {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+}
+.centerBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+}
+.innerInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 620px;
+}
+
+.imageModal {
+  width: 450px;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.PFC {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin-top: 38px;
+}
