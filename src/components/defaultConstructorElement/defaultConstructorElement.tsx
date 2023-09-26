@@ -4,7 +4,7 @@ import styles from "../defaultConstructorElement/defaultConstructorElement.modul
 interface IDCEProps {
 	type: string,
 	title: string,
-	extraClass: any
+	extraClass: string
 }
 
 const DefaultConstructorElement: FC<IDCEProps> = ({type, title, extraClass}) => {

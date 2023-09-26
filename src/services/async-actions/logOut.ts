@@ -5,9 +5,11 @@ import {setBurgerIngredientsArrayAction} from "../actions/burgerIngredientsActio
 import {Dispatch} from "redux";
 import {TBurgerAction} from "../types/burger";
 import {TUserAction, UserActionTypes} from "../types/user";
+import {fetchIngredients} from "./ingredients";
+import {TIngredientsAction} from "../types/ingredients";
 
 export const fetchLogOut = (): any => {
-	return function(dispatch: Dispatch<TBurgerAction | TUserAction>) {
+	return function(dispatch: Dispatch<TBurgerAction | TUserAction | TIngredientsAction>) {
 		fetch(`${api}/auth/logout`, {
 			method: 'POST',
 			mode: 'cors',
@@ -27,7 +29,8 @@ export const fetchLogOut = (): any => {
 			.then(data => {
 				console.log(data);
 
-				dispatch(setBurgerIngredientsArrayAction([]))
+				dispatch(setBurgerIngredientsArrayAction([]));
+				dispatch(fetchIngredients([]));
 				dispatch({type: UserActionTypes.ADD_USER, payload: null})
 				dispatch({type: UserActionTypes.SET_AUTH_CHECKED, payload: true})
 				// dispatch(addUserAction(null)); //- почему-то не работает в таком виде

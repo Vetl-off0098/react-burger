@@ -1,6 +1,5 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
-import {addUserAction, setAuthChecked} from "../actions/userActions";
 import {setCookie} from "../../utils/cookie";
 import {Dispatch} from "redux";
 import {TUserAction, UserActionTypes} from "../types/user";
@@ -31,7 +30,6 @@ export const fetchRegistration = (params: IParams, cb: () => void): any => {
 		})
 			.then(data => checkResponse(data))
 			.then(data => {
-				console.log(data)
 				let authToken;
 				let refreshToken;
 

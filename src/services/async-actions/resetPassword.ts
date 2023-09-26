@@ -1,7 +1,7 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 
-export const fetchResetPassword = (password: string, kode: any, cb: () => void): any => {
+export const fetchResetPassword = (password: string, kode: string | null, cb: () => void): any => {
 	return function() {
 		fetch(`${api}/password-reset/reset`, {
 			method: 'POST',

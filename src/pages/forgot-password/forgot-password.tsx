@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import styles from './forgot-password.module.css';
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
@@ -11,7 +11,7 @@ function ForgotPassword () {
 	const [email, setEmail] = useState('');
 	const inputRef = useRef(null);
 
-	const restore = async (e: any) => {
+	const restore = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		await fetch(`${api}/password-reset`, {
@@ -29,8 +29,7 @@ function ForgotPassword () {
 			})
 		})
 			.then(data => checkResponse(data))
-			.then(data => {
-				console.log(data)
+			.then(() => {
 				navigate('/reset-password', {replace: true})
 			})
 			.catch(e => console.log(e))

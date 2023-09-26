@@ -4,11 +4,6 @@ const defaultState: IBurgerState = {
 	burger: [],
 }
 
-export const SET_BURGER_INGREDIENTS = 'SET_BURGER_INGREDIENTS';
-export const SET_BURGER_INGREDIENTS_ARRAY = 'SET_BURGER_INGREDIENTS_ARRAY';
-export const ADD_BURGER_INGREDIENTS = 'ADD_BURGER_INGREDIENTS';
-export const REMOVE_BURGER_INGREDIENT_BY_ID = 'REMOVE_BURGER_INGREDIENT_BY_ID';
-
 export const burgerIngredientsReducer = (state = defaultState, action: TBurgerAction): IBurgerState => {
 	switch(action.type) {
 		case BurgerActionTypes.SET_BURGER_INGREDIENTS:

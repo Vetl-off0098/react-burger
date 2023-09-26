@@ -17,9 +17,9 @@ const Modal: FC<IModalProps> = ({ onClose, children }) => {
     }
   });
 
-  const ECK_KEYCODE = 27;
+  const ECK_KEYCODE: number = 27;
 
-  const closeModal = (keyPress: {keyCode: number}) => {
+  const closeModal = (keyPress: KeyboardEvent | React.KeyboardEvent) => {
     if (keyPress.keyCode === ECK_KEYCODE) {
       onClose();
     }

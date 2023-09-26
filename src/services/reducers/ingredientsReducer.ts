@@ -25,7 +25,6 @@ export const ingredientsReducer = (state = defaultState, action: TIngredientsAct
 			newArrSet.find(el => el._id === action.payload._id).count = 2;
 			return {...state, ingredients: [...newArrSet]}
 		case IngredientsActionTypes.SET_COUNT_INGREDIENT:
-			console.log(action.payload)
 			const newArrSetCount = state.ingredients;
 			newArrSetCount.find(el => el._id === action.payload.ingredient._id).count = action.payload.newCount;
 			return {...state, ingredients: [...newArrSetCount]}

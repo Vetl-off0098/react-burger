@@ -9,16 +9,17 @@ import {Dispatch} from "redux";
 import {TIsLoadingAction} from "../types/isLoading";
 import {TCreatedOrderAction} from "../types/createdOrder";
 import {TIsLoadingOrderAction} from "../types/isLoadingOrder";
+import {IIngredient} from '../../models/ingredient';
 
-export const fetchIngredients = (burger: any): any => {
+export const fetchIngredients = (burger: IIngredient[]): any => {
 	return function(dispatch: Dispatch<TIngredientsAction | TIsLoadingAction>) {
 		fetch(`${api}/ingredients`)
 			.then(data => checkResponse(data))
 			.then(response => {
-				response.data = response.data.map((el: any) => {
+				response.data = response.data.map((el: IIngredient) => {
 					return {
-							...el,
-							count: 0
+						...el,
+						count: 0
 					}
 				})
 				console.log('Set count 0')
@@ -26,24 +27,24 @@ export const fetchIngredients = (burger: any): any => {
 				dispatch(addIngredientsAction(response.data));
 
 				if (burger && burger.length) {
-					burger.forEach((el: any) => {
-						let ingredient = response.data.find((item: any) => item._id === el._id);
+					burger.forEach((el: IIngredient) => {
+						let ingredient = response.data.find((item: IIngredient) => item._id === el._id);
 
 						if (ingredient) {
-								dispatch(setCountIngredientAction({ingredient, newCount: el.count}))
+							dispatch(setCountIngredientAction({ingredient, newCount: el.count}))
 						}
 					})
 				}
 			})
 			.catch(e => {
-					console.error(e);
+				console.error(e);
 			})
 			.finally(() => dispatch(isLoadingAction(false)))
 	}
 }
 
-export const fetchCreateOrder = (burger: any): any => {
-	const bun = burger.find((el: any) => el.type === 'bun');
+export const fetchCreateOrder = (burger: IIngredient[]): any => {
+	const bun = burger.find((el: IIngredient) => el.type === 'bun');
 
 	return function(dispatch: Dispatch<TCreatedOrderAction | TIsLoadingOrderAction>) {
 		fetch(`${api}/orders`, {
@@ -55,8 +56,10 @@ export const fetchCreateOrder = (burger: any): any => {
 				'ingredients': [
 					bun,
 					bun,
-					...burger.filter((el: any) => el.type !== 'bun'),
-				].map(el => el._id)
+					...burger.filter((el: IIngredient) => el.type !== 'bun'),
+				].map((el) => {
+					if (el?._id) el._id
+				})
 			})
 		})
 			.then(data => checkResponse(data))

@@ -6,23 +6,6 @@ import {useInView} from "react-intersection-observer";
 import {useTypedSelector} from "../../hook/useTypedSelector";
 
 const BurgerIngredients = () => {
-  interface IIngredient {
-    _id: string,
-    name: string,
-    type: string,
-    proteins: number,
-    fat: number,
-    carbohydrates: number,
-    calories: number,
-    price: number,
-    image: string,
-    image_mobile: string,
-    image_large: string,
-    __v: number,
-    count: number,
-    burgerIngredientId?: string
-  }
-
   const {ingredients} = useTypedSelector((state) => state.ingredients);
 
   const [rootHeight, setRootHeight] = useState<number>(0);
