@@ -7,9 +7,12 @@ import {TBurgerAction} from "../types/burger";
 import {TUserAction, UserActionTypes} from "../types/user";
 import {fetchIngredients} from "./ingredients";
 import {TIngredientsAction} from "../types/ingredients";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../reducers";
+import {TIsLoadingAction} from "../types/isLoading";
 
-export const fetchLogOut = (): any => {
-	return function(dispatch: Dispatch<TBurgerAction | TUserAction | TIngredientsAction>) {
+export const fetchLogOut = (): ThunkAction<void, AppStateType, unknown, TBurgerAction | TUserAction | TIngredientsAction> => {
+	return function(dispatch) {
 		fetch(`${api}/auth/logout`, {
 			method: 'POST',
 			mode: 'cors',

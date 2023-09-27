@@ -10,9 +10,13 @@ import {TIsLoadingAction} from "../types/isLoading";
 import {TCreatedOrderAction} from "../types/createdOrder";
 import {TIsLoadingOrderAction} from "../types/isLoadingOrder";
 import {IIngredient} from '../../models/ingredient';
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../reducers";
+import {TBurgerAction} from "../types/burger";
+import {TUserAction} from "../types/user";
 
-export const fetchIngredients = (burger: IIngredient[]): any => {
-	return function(dispatch: Dispatch<TIngredientsAction | TIsLoadingAction>) {
+export const fetchIngredients = (burger: IIngredient[] | []): ThunkAction<void, AppStateType, unknown, TIngredientsAction | TIsLoadingAction> => {
+	return function(dispatch) {
 		fetch(`${api}/ingredients`)
 			.then(data => checkResponse(data))
 			.then(response => {
@@ -57,8 +61,10 @@ export const fetchCreateOrder = (burger: IIngredient[]): any => {
 					bun,
 					bun,
 					...burger.filter((el: IIngredient) => el.type !== 'bun'),
-				].map((el) => {
-					if (el?._id) el._id
+				].map((el: IIngredient | undefined) => {
+					if (el?._id) {
+						return el._id
+					}
 				})
 			})
 		})

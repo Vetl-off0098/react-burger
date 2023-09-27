@@ -5,6 +5,8 @@ import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLogOut} from "../../services/async-actions/logOut";
 import {useTypedSelector} from "../../hook/useTypedSelector";
+import {TIngredientsAction} from "../../services/types/ingredients";
+import {TIsLoadingAction} from "../../services/types/isLoading";
 
 function Profile () {
 	const user = useTypedSelector(state => state.user.user);
