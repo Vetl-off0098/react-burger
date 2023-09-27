@@ -26,8 +26,8 @@ const BurgerConstructor = () => {
   const burger = useTypedSelector((state) => state.burger.burger);
   const ingredients = useTypedSelector(state => state.ingredients.ingredients);
 
-  const [bun, setBun] = useState<IIngredient | any>({});
-  const [otherIngrs, setOtherIngr] = useState<Array<IIngredient> | any>([]);
+  const [bun, setBun] = useState<IIngredient | null>(null);
+  const [otherIngrs, setOtherIngr] = useState<Array<IIngredient>>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const [{isHover}, dropTarget] = useDrop({
@@ -101,7 +101,7 @@ const BurgerConstructor = () => {
   return(
     <section ref={dropTarget} className={styles.constructorAndButton}>
       <div className={styles.burgerConstructor}>
-        {Object.entries(bun).length ? <ConstructorElement
+        {bun && Object.entries(bun).length ? <ConstructorElement
           type="top"
           isLocked={true}
           text={bun.name + ' (верх)'}
@@ -140,7 +140,7 @@ const BurgerConstructor = () => {
           extraClass={`${isHover ? styles.isDrop : ''}`}
         />}
 
-        {Object.entries(bun).length ? <ConstructorElement
+        {bun && Object.entries(bun).length ? <ConstructorElement
           type="bottom"
           isLocked={true}
           text={bun.name + ' (низ)'}
