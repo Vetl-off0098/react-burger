@@ -47,10 +47,10 @@ export const fetchIngredients = (burger: IIngredient[] | []): ThunkAction<void, 
 	}
 }
 
-export const fetchCreateOrder = (burger: IIngredient[]): any => {
+export const fetchCreateOrder = (burger: IIngredient[] | []): ThunkAction<void, AppStateType, unknown, TCreatedOrderAction | TIsLoadingOrderAction> => {
 	const bun = burger.find((el: IIngredient) => el.type === 'bun');
 
-	return function(dispatch: Dispatch<TCreatedOrderAction | TIsLoadingOrderAction>) {
+	return function(dispatch) {
 		fetch(`${api}/orders`, {
 			method: 'POST',
 			headers: {

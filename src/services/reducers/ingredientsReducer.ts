@@ -9,24 +9,29 @@ export const ingredientsReducer = (state = defaultState, action: TIngredientsAct
 		case IngredientsActionTypes.ADD_INGREDIENTS:
 			return {...state, ingredients: [...action.payload]}
 		case IngredientsActionTypes.INCREASE_COUNT_INGREDIENT:
-			const newArrInc = state.ingredients;
-			newArrInc.find(el => el._id === action.payload._id).count++;
+			const newArrInc = state?.ingredients;
+			const findElInc = newArrInc.find((el) => el._id === action.payload._id);
+			if (findElInc) findElInc.count++;
 			return {...state, ingredients: [...newArrInc]}
 		case IngredientsActionTypes.DECREASE_COUNT_INGREDIENT:
 			const newArrDec = state.ingredients;
-			newArrDec.find(el => el._id === action.payload._id).count--;
+			const findElDec = newArrDec.find((el) => el._id === action.payload._id);
+			if (findElDec) findElDec.count--;
 			return {...state, ingredients: [...newArrDec]}
 		case IngredientsActionTypes.RESET_COUNT_INGREDIENT:
 			const newArrRes = state.ingredients;
-			newArrRes.find(el => el._id === action.payload._id).count = 0;
+			const findElRes = newArrRes.find((el) => el._id === action.payload._id);
+			if (findElRes) findElRes.count = 0;
 			return {...state, ingredients: [...newArrRes]}
 		case IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN:
 			const newArrSet = state.ingredients;
-			newArrSet.find(el => el._id === action.payload._id).count = 2;
+			const findElSet = newArrSet.find((el) => el._id === action.payload._id);
+			if (findElSet) findElSet.count = 2;
 			return {...state, ingredients: [...newArrSet]}
 		case IngredientsActionTypes.SET_COUNT_INGREDIENT:
 			const newArrSetCount = state.ingredients;
-			newArrSetCount.find(el => el._id === action.payload.ingredient._id).count = action.payload.newCount;
+			const findElSetCount = newArrSetCount.find((el) => el._id === action.payload._id);
+			if (findElSetCount) findElSetCount.count = action.payload.newCount;
 			return {...state, ingredients: [...newArrSetCount]}
 		default:
 			return state

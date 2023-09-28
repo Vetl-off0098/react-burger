@@ -22,3 +22,4 @@ export type RootState = ReturnType<typeof store.getState>;
 
 type TRootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<TRootReducerType>
+export type AppDispatch = typeof store.dispatch

@@ -16,7 +16,7 @@ function Profile () {
 		if (user?.email) setEmail(user.email);
 	}, [user]);
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 
 	const [email, setEmail] = useState<string>('');
 	const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {

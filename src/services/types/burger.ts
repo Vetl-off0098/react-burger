@@ -1,5 +1,7 @@
+import {IIngredient} from "../../models/ingredient";
+
 export interface IBurgerState {
-  burger: any[];
+  burger: IIngredient[];
 }
 
 export enum BurgerActionTypes {

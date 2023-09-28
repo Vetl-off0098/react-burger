@@ -11,9 +11,10 @@ import {toggleOrderAction} from "../../../services/actions/createdOrderActions";
 import {isLoadingOrderAction} from "../../../services/actions/isLoadingOrderActions";
 import {useNavigate} from "react-router-dom";
 import {useTypedSelector} from "../../../hook/useTypedSelector";
+import {IIngredient} from "../../../models/ingredient";
 
 function FinalBlock() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -28,11 +29,12 @@ function FinalBlock() {
 
   useMemo(() => {
     if (burger.length) {
-      let burgerBun = burger.find(el => el.type ==='bun');
+      let burgerBun: IIngredient | undefined = burger.find(el => el.type ==='bun');
+      const bunsPrice: number = burgerBun ? burgerBun.price * 2 : 0;
       const newTotalPrice = burger.filter(el => el.type !== 'bun').reduce((acc, cur) => {
         acc += cur.price;
         return acc;
-      }, 0) + burgerBun ? burgerBun.price * 2 : 0;
+      }, 0) + bunsPrice;
 
       setTotalPrice(newTotalPrice);
     } else {
