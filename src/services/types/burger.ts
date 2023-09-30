@@ -16,19 +16,19 @@ interface ISetBurgerIngredientsAction {
   payload: any;
 }
 
-interface ISetBurgerIngredientsArrayAction {
-  type: BurgerActionTypes.SET_BURGER_INGREDIENTS_ARRAY;
-  payload: any;
+export interface ISetBurgerIngredientsArrayAction {
+  readonly type: typeof BurgerActionTypes.SET_BURGER_INGREDIENTS_ARRAY;
+  readonly payload: IIngredient[];
 }
 
-interface IAddBurgerIngredientsAction {
-  type: BurgerActionTypes.ADD_BURGER_INGREDIENTS;
-  payload: any;
+export interface IAddBurgerIngredientsAction {
+  readonly type: typeof BurgerActionTypes.ADD_BURGER_INGREDIENTS;
+  readonly payload: IIngredient;
 }
 
-interface IRemoveBurgerIngredientByIdAction {
-  type: BurgerActionTypes.REMOVE_BURGER_INGREDIENT_BY_ID;
-  payload: any;
+export interface IRemoveBurgerIngredientByIdAction {
+  readonly type: typeof BurgerActionTypes.REMOVE_BURGER_INGREDIENT_BY_ID;
+  readonly payload: string;
 }
 
 export type TBurgerAction = ISetBurgerIngredientsAction

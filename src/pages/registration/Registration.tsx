@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import styles from './Registration.module.css';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
 import {fetchRegistration} from "../../services/async-actions/registration";
+import {useDispatch} from "../../hook/useTypedDispatch";
 
 function Registration () {
 	const navigate = useNavigate();

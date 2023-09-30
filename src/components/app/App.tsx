@@ -7,7 +7,6 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import {OnlyAuth} from "../../hoc/RequireAuth";
 import Profile from "../../pages/profile/profile";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchUser} from "../../services/async-actions/user";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -16,6 +15,7 @@ import {fetchIngredients} from "../../services/async-actions/ingredients";
 import IngredientInfo from "../../pages/ingredient-info/ingredient-info";
 import Layout from "../layout/Layout";
 import {useTypedSelector} from "../../hook/useTypedSelector";
+import {useDispatch} from "../../hook/useTypedDispatch";
 
 const App = () => {
   const navigate = useNavigate();

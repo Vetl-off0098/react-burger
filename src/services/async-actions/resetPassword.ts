@@ -1,7 +1,8 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
+import {AppThunk} from "../reducers";
 
-export const fetchResetPassword = (password: string, kode: string | null, cb: () => void): any => {
+export const fetchResetPassword: AppThunk = (password: string, kode: string | null, cb: () => void) => {
 	return function() {
 		fetch(`${api}/password-reset/reset`, {
 			method: 'POST',

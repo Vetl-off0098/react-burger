@@ -1,3 +1,3 @@
-import {IsLoadingActionTypes} from "../types/isLoading";
+import {ISetIsLoadingAction, IsLoadingActionTypes} from "../types/isLoading";
 
-export const isLoadingAction = (payload: boolean) => ({type: IsLoadingActionTypes.SET_IS_LOADING, payload})
+export const isLoadingAction = (payload: boolean): ISetIsLoadingAction => ({type: IsLoadingActionTypes.SET_IS_LOADING, payload})

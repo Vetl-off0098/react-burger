@@ -1,8 +1,8 @@
 import {createContext} from "react";
-import {useDispatch} from "react-redux";
 import {fetchLogin} from "../services/async-actions/login";
 import {useTypedSelector} from "../hook/useTypedSelector";
 import {UserActionTypes} from "../services/types/user";
+import {useDispatch} from "../hook/useTypedDispatch";
 
 export const AuthContext: any = createContext(null);
 

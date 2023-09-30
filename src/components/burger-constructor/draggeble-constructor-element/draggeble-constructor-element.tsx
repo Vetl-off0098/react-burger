@@ -7,7 +7,7 @@ import {CSS} from '@dnd-kit/utilities';
 import {IIngredient} from '../../../models/ingredient'
 
 interface IDCEProps {
-	ingredientInfo: IIngredient,
+	ingredientInfo: IIngredient | undefined,
 	deleteElement?: (param: IIngredient) => void
 }
 
@@ -27,7 +27,7 @@ const DraggableConstructorElement:FC<IDCEProps> = ({ingredientInfo, deleteElemen
 	}
 
 	const deleteHandler = (): void => {
-		if (deleteElement) {
+		if (deleteElement && ingredientInfo) {
 			deleteElement(ingredientInfo)
 		}
 	}
@@ -42,13 +42,13 @@ const DraggableConstructorElement:FC<IDCEProps> = ({ingredientInfo, deleteElemen
 		>
 			<img src={vector} alt="" className={styles.image} ref={setActivatorNodeRef} {...listeners}/>
 
-			<ConstructorElement
+			{ingredientInfo && (<ConstructorElement
 				text={ingredientInfo.name}
 				price={ingredientInfo.price}
 				thumbnail={ingredientInfo.image}
 				extraClass={`ml-3 ${styles.constructorElement}`}
 				handleClose={deleteHandler}
-			/>
+			/>)}
 		</div>
 	)
 }

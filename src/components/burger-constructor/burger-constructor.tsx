@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import styles from './burger-constructor.module.css';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import FinalBlock from './final-block/final-block';
-import {useDispatch} from "react-redux";
 import {
   decreaseCountIngredientAction, increaseCountIngredientAction,
   resetCountIngredientAction,
@@ -19,6 +18,7 @@ import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/
 import DefaultConstructorElement from "../defaultConstructorElement/defaultConstructorElement";
 import {useTypedSelector} from "../../hook/useTypedSelector";
 import {IIngredient} from '../../models/ingredient'
+import {useDispatch} from "../../hook/useTypedDispatch";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -42,9 +42,8 @@ const BurgerConstructor = () => {
 
   useEffect(() => {
     if (burger.length && burger.filter(el => el.type === 'bun').length) {
-      setBun(
-        burger.find(el => el.type === 'bun')
-      );
+      let newBun = burger.find(el => el.type === 'bun');
+      if (newBun) setBun(newBun);
     }
 
     setOtherIngr([
@@ -60,8 +59,11 @@ const BurgerConstructor = () => {
         return
       } else {
         if (burger.length && burgerBun) {
-          dispatch(resetCountIngredientAction(burger.find(el => el.count === 2 && el.type === 'bun')));
-          dispatch(removeBurgerIngredientByIdAction(burger.find(el => el.count === 2 && el.type === 'bun').burgerIngredientId))
+          let newBun = burger.find(el => el.count === 2 && el.type === 'bun');
+          if (newBun && newBun.burgerIngredientId) {
+            dispatch(resetCountIngredientAction(newBun));
+            dispatch(removeBurgerIngredientByIdAction(newBun.burgerIngredientId))
+          }
         }
 
         dispatch(setCountIngredientBunAction(item))
@@ -70,12 +72,17 @@ const BurgerConstructor = () => {
       dispatch(increaseCountIngredientAction(item));
     }
 
-    dispatch(addBurgerIngredientsAction({...ingredients.find(el => el._id === item._id), burgerIngredientId: Date.now()}));
+    const findIngredient: IIngredient | undefined = ingredients.find(el => el._id === item._id);
+    if (findIngredient) {
+      dispatch(addBurgerIngredientsAction({...findIngredient, burgerIngredientId: String(Date.now())}));
+    }
   }
 
   const deleteElement = (item: IIngredient) => {
     dispatch(decreaseCountIngredientAction(item));
-    dispatch(removeBurgerIngredientByIdAction(item.burgerIngredientId));
+    if (item?.burgerIngredientId) {
+      dispatch(removeBurgerIngredientByIdAction(item.burgerIngredientId));
+    }
   }
 
   const handleDragStart = (event: any) => {
@@ -94,8 +101,13 @@ const BurgerConstructor = () => {
     const oldIndex = otherIngrs.findIndex((i: IIngredient) => i.burgerIngredientId === active.id);
     const newIndex = otherIngrs.findIndex((i: IIngredient) => i.burgerIngredientId === over.id);
 
-    const newBurger = [burger.find(el => el.type === 'bun'), ...arrayMove(otherIngrs, oldIndex, newIndex)];
-    dispatch(setBurgerIngredientsArrayAction(newBurger))
+    const bun: IIngredient | undefined = burger.find(el => el.type === 'bun');
+    if (bun) {
+      const newBurger: IIngredient[] = [bun, ...arrayMove(otherIngrs, oldIndex, newIndex)];
+      if (newBurger) {
+        dispatch(setBurgerIngredientsArrayAction(newBurger))
+      }
+    }
   }
 
   return(

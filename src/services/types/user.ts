@@ -13,14 +13,14 @@ export enum UserActionTypes {
   ADD_USER = 'ADD_USER'
 }
 
-interface ISetAuthCheckedAction {
-  type: UserActionTypes.SET_AUTH_CHECKED;
-  payload: boolean;
+export interface ISetAuthCheckedAction {
+  readonly type: typeof UserActionTypes.SET_AUTH_CHECKED;
+  readonly payload: boolean;
 }
 
-interface IAddUserAction {
-  type: UserActionTypes.ADD_USER;
-  payload: IUser | null;
+export interface IAddUserAction {
+  readonly type: typeof UserActionTypes.ADD_USER;
+  readonly payload: IUser | null;
 }
 
 export type TUserAction = ISetAuthCheckedAction | IAddUserAction

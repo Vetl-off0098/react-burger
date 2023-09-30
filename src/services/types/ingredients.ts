@@ -1,7 +1,11 @@
 import {IIngredient} from "../../models/ingredient";
 
+export interface IIngredientSet extends IIngredient {
+  newCount: number;
+}
+
 export interface IIngredientState {
-  ingredients: IIngredient[];
+  ingredients: IIngredient[] | [];
 }
 
 export enum IngredientsActionTypes {
@@ -13,34 +17,34 @@ export enum IngredientsActionTypes {
   SET_COUNT_INGREDIENT = 'SET_COUNT_INGREDIENT',
 }
 
-interface IAddIngredientsAction {
-  type: IngredientsActionTypes.ADD_INGREDIENTS;
-  payload: any;
+export interface IAddIngredientsAction {
+  readonly type: typeof IngredientsActionTypes.ADD_INGREDIENTS;
+  readonly payload: IIngredient[];
 }
 
-interface IIncreaseCountIngredientAction {
-  type: IngredientsActionTypes.INCREASE_COUNT_INGREDIENT;
-  payload: any;
+export interface IIncreaseCountIngredientAction {
+  readonly type: typeof IngredientsActionTypes.INCREASE_COUNT_INGREDIENT;
+  readonly payload: IIngredient;
 }
 
-interface IDecreaseCountIngredientAction {
-  type: IngredientsActionTypes.DECREASE_COUNT_INGREDIENT;
-  payload: any;
+export interface IDecreaseCountIngredientAction {
+  readonly type: typeof IngredientsActionTypes.DECREASE_COUNT_INGREDIENT;
+  readonly payload: IIngredient;
 }
 
-interface IResetCountIngredientAction {
-  type: IngredientsActionTypes.RESET_COUNT_INGREDIENT;
-  payload: any;
+export interface IResetCountIngredientAction {
+  readonly type: typeof IngredientsActionTypes.RESET_COUNT_INGREDIENT;
+  readonly payload: IIngredient;
 }
 
-interface ISetCountIngredientBunAction {
-  type: IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN;
-  payload: any;
+export interface ISetCountIngredientBunAction {
+  readonly type: typeof IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN;
+  readonly payload: IIngredient;
 }
 
-interface ISetCountIngredientAction {
-  type: IngredientsActionTypes.SET_COUNT_INGREDIENT;
-  payload: any;
+export interface ISetCountIngredientAction {
+  readonly type: typeof IngredientsActionTypes.SET_COUNT_INGREDIENT;
+  readonly payload: IIngredientSet;
 }
 
 export type TIngredientsAction = IAddIngredientsAction

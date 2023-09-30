@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import styles from './profile.module.css';
 import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchLogOut} from "../../services/async-actions/logOut";
 import {useTypedSelector} from "../../hook/useTypedSelector";
-import {TIngredientsAction} from "../../services/types/ingredients";
-import {TIsLoadingAction} from "../../services/types/isLoading";
+import {useDispatch} from "../../hook/useTypedDispatch";
 
 function Profile () {
 	const user = useTypedSelector(state => state.user.user);
@@ -16,7 +14,7 @@ function Profile () {
 		if (user?.email) setEmail(user.email);
 	}, [user]);
 
-	const dispatch = useDispatch<any>();
+	const dispatch = useDispatch();
 
 	const [email, setEmail] = useState<string>('');
 	const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {

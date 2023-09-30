@@ -2,17 +2,12 @@ import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 import {getCookie} from "../../utils/cookie";
 import {setBurgerIngredientsArrayAction} from "../actions/burgerIngredientsActions";
-import {Dispatch} from "redux";
-import {TBurgerAction} from "../types/burger";
-import {TUserAction, UserActionTypes} from "../types/user";
 import {fetchIngredients} from "./ingredients";
-import {TIngredientsAction} from "../types/ingredients";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../reducers";
-import {TIsLoadingAction} from "../types/isLoading";
+import {AppDispatch, AppThunk} from "../reducers";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
 
-export const fetchLogOut = (): ThunkAction<void, AppStateType, unknown, TBurgerAction | TUserAction | TIngredientsAction> => {
-	return function(dispatch) {
+export const fetchLogOut: AppThunk = () => {
+	return function(dispatch: AppDispatch | any) {
 		fetch(`${api}/auth/logout`, {
 			method: 'POST',
 			mode: 'cors',
@@ -29,15 +24,12 @@ export const fetchLogOut = (): ThunkAction<void, AppStateType, unknown, TBurgerA
 			})
 		})
 			.then(data => checkResponse(data))
-			.then(data => {
-				console.log(data);
-
+			.then(() => {
 				dispatch(setBurgerIngredientsArrayAction([]));
 				dispatch(fetchIngredients([]));
-				dispatch({type: UserActionTypes.ADD_USER, payload: null})
-				dispatch({type: UserActionTypes.SET_AUTH_CHECKED, payload: true})
-				// dispatch(addUserAction(null)); //- почему-то не работает в таком виде
-				// dispatch(setAuthChecked(true)); - почему-то не работает в таком виде
+
+				dispatch(addUserAction(null));
+				dispatch(setAuthChecked(true));
 
 				// setCookie('token', null);
 				// setCookie('refresh', null);

@@ -4,19 +4,11 @@ import {addIngredientsAction, setCountIngredientAction} from "../actions/ingredi
 import {isLoadingAction} from "../actions/isLoadingActions";
 import {createOrderAction} from "../actions/createdOrderActions";
 import {isLoadingOrderAction} from "../actions/isLoadingOrderActions";
-import {TIngredientsAction} from "../types/ingredients";
-import {Dispatch} from "redux";
-import {TIsLoadingAction} from "../types/isLoading";
-import {TCreatedOrderAction} from "../types/createdOrder";
-import {TIsLoadingOrderAction} from "../types/isLoadingOrder";
 import {IIngredient} from '../../models/ingredient';
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../reducers";
-import {TBurgerAction} from "../types/burger";
-import {TUserAction} from "../types/user";
+import {AppDispatch, AppThunk} from "../reducers";
 
-export const fetchIngredients = (burger: IIngredient[] | []): ThunkAction<void, AppStateType, unknown, TIngredientsAction | TIsLoadingAction> => {
-	return function(dispatch) {
+export const fetchIngredients: AppThunk = (burger: IIngredient[] | []) => {
+	return function(dispatch: AppDispatch) {
 		fetch(`${api}/ingredients`)
 			.then(data => checkResponse(data))
 			.then(response => {
@@ -26,16 +18,14 @@ export const fetchIngredients = (burger: IIngredient[] | []): ThunkAction<void, 
 						count: 0
 					}
 				})
-				console.log('Set count 0')
-				console.log(burger)
 				dispatch(addIngredientsAction(response.data));
 
 				if (burger && burger.length) {
 					burger.forEach((el: IIngredient) => {
-						let ingredient = response.data.find((item: IIngredient) => item._id === el._id);
+						let ingredient:IIngredient = response.data.find((item: IIngredient) => item._id === el._id);
 
 						if (ingredient) {
-							dispatch(setCountIngredientAction({ingredient, newCount: el.count}))
+							dispatch(setCountIngredientAction({...ingredient, newCount: el.count}))
 						}
 					})
 				}
@@ -47,10 +37,10 @@ export const fetchIngredients = (burger: IIngredient[] | []): ThunkAction<void, 
 	}
 }
 
-export const fetchCreateOrder = (burger: IIngredient[] | []): ThunkAction<void, AppStateType, unknown, TCreatedOrderAction | TIsLoadingOrderAction> => {
+export const fetchCreateOrder: AppThunk = (burger: IIngredient[] | []) => {
 	const bun = burger.find((el: IIngredient) => el.type === 'bun');
 
-	return function(dispatch) {
+	return function(dispatch: AppDispatch) {
 		fetch(`${api}/orders`, {
 			method: 'POST',
 			headers: {

@@ -1,8 +1,8 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
 import {setCookie} from "../../utils/cookie";
-import {Dispatch} from "redux";
-import {TUserAction, UserActionTypes} from "../types/user";
+import {addUserAction, setAuthChecked} from "../actions/userActions";
+import {AppDispatch, AppThunk} from "../reducers";
 
 interface IParams {
 	email: string,
@@ -10,8 +10,8 @@ interface IParams {
 	name: string
 }
 
-export const fetchRegistration = (params: IParams, cb: () => void): any => {
-	return function(dispatch: Dispatch<TUserAction>) {
+export const fetchRegistration: AppThunk = (params: IParams, cb: () => any) => {
+	return function(dispatch: AppDispatch) {
 		fetch(`${api}/auth/register`, {
 			method: 'POST',
 			mode: 'cors',
@@ -42,11 +42,9 @@ export const fetchRegistration = (params: IParams, cb: () => void): any => {
 					refreshToken = data.refreshToken;
 					setCookie('refresh', refreshToken);
 				}
-				dispatch({type: UserActionTypes.ADD_USER, payload: data.user})
-				dispatch({type: UserActionTypes.SET_AUTH_CHECKED, payload: true})
 
-				// dispatch(addUserAction(data.user)); - почему-то не работает в таком виде
-				// dispatch(setAuthChecked(true)); - почему-то не работает в таком виде
+				dispatch(addUserAction(data.user));
+				dispatch(setAuthChecked(true));
 				cb();
 			})
 			.catch(e => console.log(e))

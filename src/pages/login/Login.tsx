@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import styles from './Login.module.css';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {fetchLogin} from "../../services/async-actions/login";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../hook/useTypedDispatch";
 
 function Login () {
   const navigate = useNavigate();

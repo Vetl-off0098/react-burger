@@ -5,16 +5,16 @@ import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../../modal/modal";
 import OrderDetails from "../../order-details/order-details";
 import orderStatus from "../../../images/done.png";
-import {useDispatch} from "react-redux";
 import {fetchCreateOrder} from "../../../services/async-actions/ingredients";
 import {toggleOrderAction} from "../../../services/actions/createdOrderActions";
 import {isLoadingOrderAction} from "../../../services/actions/isLoadingOrderActions";
 import {useNavigate} from "react-router-dom";
 import {useTypedSelector} from "../../../hook/useTypedSelector";
 import {IIngredient} from "../../../models/ingredient";
+import {useDispatch} from "../../../hook/useTypedDispatch";
 
 function FinalBlock() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const [totalPrice, setTotalPrice] = useState(0);
 
