@@ -23,6 +23,9 @@ export const ingredientsReducer = (state = defaultState, action: TIngredientsAct
 			const findElRes = newArrRes.find((el) => el._id === action.payload._id);
 			if (findElRes) findElRes.count = 0;
 			return {...state, ingredients: [...newArrRes]}
+		case IngredientsActionTypes.RESET_COUNT_ALL_INGREDIENTS:
+			const newArrResAll = state.ingredients.map(el => ({...el, count: 0}));
+			return {...state, ingredients: [...newArrResAll]}
 		case IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN:
 			const newArrSet = state.ingredients;
 			const findElSet = newArrSet.find((el) => el._id === action.payload._id);

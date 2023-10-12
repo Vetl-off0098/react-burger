@@ -5,9 +5,10 @@ import {setBurgerIngredientsArrayAction} from "../actions/burgerIngredientsActio
 import {fetchIngredients} from "./ingredients";
 import {AppDispatch, AppThunk} from "../reducers";
 import {addUserAction, setAuthChecked} from "../actions/userActions";
+import {resetCountAllIngredientsAction} from "../actions/ingredientsAction";
 
 export const fetchLogOut: AppThunk = () => {
-	return function(dispatch: AppDispatch | any) {
+	return function(dispatch: AppDispatch) {
 		fetch(`${api}/auth/logout`, {
 			method: 'POST',
 			mode: 'cors',
@@ -26,7 +27,8 @@ export const fetchLogOut: AppThunk = () => {
 			.then(data => checkResponse(data))
 			.then(() => {
 				dispatch(setBurgerIngredientsArrayAction([]));
-				dispatch(fetchIngredients([]));
+				// dispatch(fetchIngredients([]));
+				dispatch(resetCountAllIngredientsAction());
 
 				dispatch(addUserAction(null));
 				dispatch(setAuthChecked(true));

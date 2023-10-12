@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Main from "../main/Main";
+import Feed from "../../pages/feed/feed";
 import Login from "../../pages/login/Login";
 import Registration from "../../pages/registration/Registration";
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
@@ -16,6 +17,9 @@ import IngredientInfo from "../../pages/ingredient-info/ingredient-info";
 import Layout from "../layout/Layout";
 import {useTypedSelector} from "../../hook/useTypedSelector";
 import {useDispatch} from "../../hook/useTypedDispatch";
+import FeedInfo from "../../pages/feed-info/feed-info";
+import ProfileLayout from "../profile-layout/Profile-layout";
+import OrdersProfile from "../../pages/orders-profile/orders-profile";
 
 const App = () => {
   const navigate = useNavigate();
@@ -39,11 +43,17 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/feed/:feedId" element={<FeedInfo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+          <Route path="/profile" element={<ProfileLayout />}>
+            <Route path="/profile/profile" element={<OnlyAuth component={<Profile />} />} />
+            <Route path="/profile/orders" element={<OnlyAuth component={<OrdersProfile />} />} />
+          </Route>
+          <Route path="/profile/orders/:id" element={<OnlyAuth component={<FeedInfo />} />} />
           <Route path="/ingredients/:ingredientId" element={
             <IngredientInfo />
           } />

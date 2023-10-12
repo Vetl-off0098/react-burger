@@ -27,12 +27,14 @@ function AppHeader() {
               </li>
 
               <li>
-                <ButtonHeader>
-                  <ListIcon type={ display.visible === 'orderFeed' ? 'primary' : 'secondary' } />
-                  <p className={`text text_type_main-default ${display.visible === 'orderFeed' ? 'standartText' : 'secondaryText'}`}>
-                    Лента заказов
-                  </p>
-                </ButtonHeader>
+                <NavLink to="/feed">
+                  <ButtonHeader>
+                    <ListIcon type={'secondary'} />
+                    <p className={`text text_type_main-default secondaryText`}>
+                      Лента заказов
+                    </p>
+                  </ButtonHeader>
+                </NavLink>
               </li>
             </ul>
           </nav>
@@ -51,7 +53,7 @@ function AppHeader() {
               </li>
 
               <li>
-                <NavLink to="/profile">
+                <NavLink to="/profile/profile">
                   <ButtonHeader>
                     <ProfileIcon type={'secondary'} />
                     <p className={`text text_type_main-default secondaryText`}>

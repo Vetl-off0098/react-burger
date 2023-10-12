@@ -13,6 +13,7 @@ export enum IngredientsActionTypes {
   INCREASE_COUNT_INGREDIENT = 'INCREASE_COUNT_INGREDIENT',
   DECREASE_COUNT_INGREDIENT = 'DECREASE_COUNT_INGREDIENT',
   RESET_COUNT_INGREDIENT = 'RESET_COUNT_INGREDIENT',
+  RESET_COUNT_ALL_INGREDIENTS = 'RESET_COUNT_ALL_INGREDIENTS',
   SET_COUNT_INGREDIENT_BUN = 'SET_COUNT_INGREDIENT_BUN',
   SET_COUNT_INGREDIENT = 'SET_COUNT_INGREDIENT',
 }
@@ -37,6 +38,10 @@ export interface IResetCountIngredientAction {
   readonly payload: IIngredient;
 }
 
+export interface IResetCountAllIngredientsAction {
+  readonly type: typeof IngredientsActionTypes.RESET_COUNT_ALL_INGREDIENTS;
+}
+
 export interface ISetCountIngredientBunAction {
   readonly type: typeof IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN;
   readonly payload: IIngredient;
@@ -51,5 +56,6 @@ export type TIngredientsAction = IAddIngredientsAction
   | IIncreaseCountIngredientAction
   | IDecreaseCountIngredientAction
   | IResetCountIngredientAction
+  | IResetCountAllIngredientsAction
   | ISetCountIngredientBunAction
   | ISetCountIngredientAction

@@ -1,0 +1,17 @@
+.leftPart {
+  max-width: 320px;
+}
+.navigation {
+  display: flex;
+  flex-direction: column;
+}
+.buttonLink {
+  line-height: 60px;
+  color: #8585AD;
+}
+.buttonLink:hover {
+  color: white;
+}
+.logoutBtn {
+  cursor: pointer;
+}

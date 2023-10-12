@@ -1,0 +1,46 @@
+.main {
+  /*height: calc(100vh - 88px);*/
+}
+.content {
+  display: flex;
+}
+.ordersBlock {
+  width: 584px;
+  max-height: 83vh;
+  overflow-y: scroll;
+}
+
+.ordersBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ordersBlock::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.ordersBlock::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+.rightBlock {
+
+}
+.readyOrder {
+  color: #00CCCC;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  width: 580px;
+}
+.status {
+  width: 272px;
+}
+.ready {
+
+}
+.inWork {
+
+}
+.ordersCount {
+  text-shadow: 0 0 15px #3333ff;
+}

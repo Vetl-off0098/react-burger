@@ -1,0 +1,78 @@
+.feedInfo {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.feedInfoWrap {
+  width: 640px;
+}
+.status {
+  color: #00CCCC;
+}
+.container {}
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.textCenter {
+  text-align: center;
+}
+.compound {
+
+}
+.ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.imageAndName {
+  display: flex;
+  align-items: center;
+}
+.image {
+  transform: translate3d(-25px, 4px, 0px);
+  width: 111px;
+}
+.ingredientPicture {
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  border: double 2px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(63.18deg, #1C1C21 0%, #1C1C21 100%), radial-gradient(circle at top left, #801ab3,#4c4cff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.countAndPrice {
+  display: flex;
+  align-items: center;
+}
+.dataAndPrice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.priceBlock {
+  display: flex;
+  align-items: center;
+}
+.ingredientsBlock {
+  max-height: 330px;
+  overflow-y: scroll;
+}
+
+.ingredientsBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredientsBlock::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.ingredientsBlock::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}

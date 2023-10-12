@@ -13,17 +13,80 @@ import {TIngredientsAction} from "../types/ingredients";
 import {TIsLoadingAction} from "../types/isLoading";
 import {TIsLoadingOrderAction} from "../types/isLoadingOrder";
 import {TUserAction} from "../types/user";
+import {socketMiddleware} from "../middleware/socketMiddleware";
+import {feedReducer} from "./feedReducer";
+import {ordersReducer} from "./ordersReducer";
+import {
+	FEED_CONNECTION_CLOSE, FEED_CONNECTION_CLOSED,
+	FEED_CONNECTION_ERROR, FEED_CONNECTION_INIT,
+	FEED_CONNECTION_SUCCESS, FEED_GET_MESSAGE, FEED_SEND_MESSAGE,
+	ORDERS_CONNECTION_CLOSE, ORDERS_CONNECTION_CLOSED,
+	ORDERS_CONNECTION_ERROR, ORDERS_CONNECTION_INIT,
+	ORDERS_CONNECTION_SUCCESS, ORDERS_GET_MESSAGE, ORDERS_SEND_MESSAGE
+} from "../action-types/wsActionTypes";
+
 
 const rootReducer = combineReducers({
-		ingredients: ingredientsReducer,
-		burger: burgerIngredientsReducer,
-		isLoading: isLoadingReducer,
-		createdOrder: createdOrderReducer,
-		isLoadingOrder: isLoadingOrderReducer,
-		user: userReducer
+	ingredients: ingredientsReducer,
+	burger: burgerIngredientsReducer,
+	isLoading: isLoadingReducer,
+	createdOrder: createdOrderReducer,
+	isLoadingOrder: isLoadingOrderReducer,
+	user: userReducer,
+	feedReducer: feedReducer,
+	ordersReducer: ordersReducer,
 })
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export type TOrdersWsAcions = {
+	wsInit: typeof ORDERS_CONNECTION_INIT,
+	wsClose: typeof ORDERS_CONNECTION_CLOSE,
+	onOpen: typeof ORDERS_CONNECTION_SUCCESS,
+	onClose: typeof ORDERS_CONNECTION_CLOSED,
+	onError: typeof ORDERS_CONNECTION_ERROR,
+	onMessage: typeof ORDERS_GET_MESSAGE,
+	wsSendMessage: typeof ORDERS_SEND_MESSAGE
+}
+
+export type TFeedsWsAcions = {
+	wsInit: typeof FEED_CONNECTION_INIT,
+	wsClose: typeof FEED_CONNECTION_CLOSE,
+	onOpen: typeof FEED_CONNECTION_SUCCESS,
+	onClose: typeof FEED_CONNECTION_CLOSED,
+	onError: typeof FEED_CONNECTION_ERROR,
+	onMessage: typeof FEED_GET_MESSAGE,
+	wsSendMessage: typeof FEED_SEND_MESSAGE
+}
+
+const ordersWsAcions: TOrdersWsAcions = {
+	wsInit: ORDERS_CONNECTION_INIT,
+	wsClose: ORDERS_CONNECTION_CLOSE,
+	onOpen: ORDERS_CONNECTION_SUCCESS,
+	onClose: ORDERS_CONNECTION_CLOSED,
+	onError: ORDERS_CONNECTION_ERROR,
+	onMessage: ORDERS_GET_MESSAGE,
+	wsSendMessage: ORDERS_SEND_MESSAGE
+};
+
+const feedWsActions: TFeedsWsAcions = {
+	wsInit: FEED_CONNECTION_INIT,
+	wsClose: FEED_CONNECTION_CLOSE,
+	onOpen: FEED_CONNECTION_SUCCESS,
+	onClose: FEED_CONNECTION_CLOSED,
+	onError: FEED_CONNECTION_ERROR,
+	onMessage: FEED_GET_MESSAGE,
+	wsSendMessage: FEED_SEND_MESSAGE
+};
+
+export const store = createStore(
+	rootReducer,
+	composeWithDevTools(
+		applyMiddleware(
+			thunk,
+			socketMiddleware(ordersWsAcions),
+			socketMiddleware(feedWsActions),
+		)
+	)
+);
 export type RootState = ReturnType<typeof store.getState>;
 
 type TRootReducerType = typeof rootReducer;
