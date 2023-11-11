@@ -4,17 +4,30 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {useNavigate} from "react-router-dom";
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
+import {forgotPasswordApi} from "../../utils/burger-api";
 
 function ForgotPassword () {
 	const navigate = useNavigate();
 
 	const [email, setEmail] = useState('');
+	const [error, setError] = useState<Error | null>(null);
 	const inputRef = useRef(null);
 
-	const restore = async (e: React.FormEvent<HTMLFormElement>) => {
+	const restore = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		await fetch(`${api}/password-reset`, {
+		setError(null);
+		forgotPasswordApi({email})
+			.then(() => {
+				navigate("/reset-password", {replace: true});
+			})
+			.catch((err) => setError(err));
+
+
+
+
+
+		fetch(`${api}/password-reset`, {
 			method: 'POST',
 			mode: 'cors',
 			cache: 'no-cache',
@@ -63,6 +76,12 @@ function ForgotPassword () {
 							/>
 
 							<input type="submit" value={'Восстановить'} className="submitBtn mt-6" />
+
+							{error && (
+								<p className={`${styles.error} text text_type_main-default pb-6`}>
+									{error.message}
+								</p>
+							)}
 						</form>
 					</div>
 

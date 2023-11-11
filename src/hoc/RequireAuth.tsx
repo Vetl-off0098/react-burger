@@ -1,6 +1,7 @@
 import {useLocation, Navigate} from "react-router-dom";
 import {useTypedSelector} from "../hook/useTypedSelector";
 import React, {ReactElement} from "react";
+import Preloader from "../components/preloader/Preloader";
 
 interface IRequireAuth {
 	component: ReactElement,
@@ -9,11 +10,11 @@ interface IRequireAuth {
 
 const RequireAuth: React.FC<IRequireAuth> = ({onlyUnAuth = false, component}) => {
 	const location = useLocation();
-	const isAuthChecked = useTypedSelector(state => state.user.isAuthChecked);
-	const user = useTypedSelector(state => state.user.user);
+	const isAuthChecked = useTypedSelector(state => state.userAuth.isAuthChecked);
+	const user = useTypedSelector(state => state.userAuth.data);
 
 	if (!isAuthChecked) {
-		return null;
+		return <Preloader />;
 	}
 
 	if (onlyUnAuth && user) {

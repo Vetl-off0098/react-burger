@@ -3,9 +3,10 @@
 }
 .content {
   display: flex;
+  justify-content: space-between;
 }
 .ordersBlock {
-  width: 584px;
+  width: 608px;
   max-height: 83vh;
   overflow-y: scroll;
 }
@@ -22,7 +23,16 @@
   background-color: #8585AD;
 }
 .rightBlock {
-
+  min-width: 580px;
+}
+.readyOrders {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /*width: fit-content;*/
+  max-height: 250px;
+  column-gap: 10px;
+  overflow: hidden;
 }
 .readyOrder {
   color: #00CCCC;
@@ -30,13 +40,12 @@
 .top {
   display: flex;
   justify-content: space-between;
-  width: 580px;
 }
 .status {
-  width: 272px;
+  min-width: 48%;
+  display: inline;
 }
 .ready {
-
 }
 .inWork {
 

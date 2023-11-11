@@ -4,7 +4,7 @@ import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui
 import {useTypedSelector} from "../../hook/useTypedSelector";
 
 function Profile () {
-	const user = useTypedSelector(state => state.user.user);
+	const user = useTypedSelector(state => state.userAuth.data);
 
 	useEffect(() => {
 		if (user?.name) setName(user.name);

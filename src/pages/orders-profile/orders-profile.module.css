@@ -3,8 +3,8 @@
   width: 100%;
 }
 .ordersBlock {
-  max-height: 83vh;
-  overflow-y: scroll;
+  max-height: 78vh;
+  overflow-y: auto;
 }
 
 .ordersBlock::-webkit-scrollbar {

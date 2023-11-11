@@ -1,6 +1,6 @@
 import api from "../../utils/api";
 import checkResponse from "../../utils/check-response";
-import {getCookie} from "../../utils/cookie";
+import {deleteCookie, getCookie, setCookie} from "../../utils/cookie";
 import {setBurgerIngredientsArrayAction} from "../actions/burgerIngredientsActions";
 import {fetchIngredients} from "./ingredients";
 import {AppDispatch, AppThunk} from "../reducers";
@@ -33,6 +33,8 @@ export const fetchLogOut: AppThunk = () => {
 				dispatch(addUserAction(null));
 				dispatch(setAuthChecked(true));
 
+				deleteCookie("token");
+				deleteCookie("refresh");
 				// setCookie('token', null);
 				// setCookie('refresh', null);
 			})

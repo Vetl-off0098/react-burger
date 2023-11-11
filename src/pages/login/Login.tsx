@@ -4,6 +4,7 @@ import styles from './Login.module.css';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {fetchLogin} from "../../services/async-actions/login";
 import {useDispatch} from "../../hook/useTypedDispatch";
+import {loginUser} from "../../services/actions/userActions";
 
 function Login () {
   const navigate = useNavigate();
@@ -22,9 +23,11 @@ function Login () {
     setPassword(e.target.value)
   };
 
-  const logIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const logIn = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(fetchLogin({email, password}, () => navigate(fromPage, {state: location.state, replace: true})))
+
+    dispatch(loginUser(email, password));
+    // dispatch(fetchLogin({email, password}, () => navigate(fromPage, {state: location.state, replace: true})))
   };
 
   const goToRegistration = () => {

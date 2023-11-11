@@ -41,7 +41,9 @@ const BurgerConstructor = () => {
   });
 
   useEffect(() => {
-    if (burger.length && burger.filter(el => el.type === 'bun').length) {
+    setBun(null);
+    const burgerBuns = burger?.filter(el => el.type === 'bun');
+    if (burger?.length && burgerBuns.length) {
       let newBun = burger.find(el => el.type === 'bun');
       if (newBun) setBun(newBun);
     }

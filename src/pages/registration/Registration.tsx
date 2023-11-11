@@ -4,6 +4,7 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import {useNavigate} from "react-router-dom";
 import {fetchRegistration} from "../../services/async-actions/registration";
 import {useDispatch} from "../../hook/useTypedDispatch";
+import {registerUser} from "../../services/actions/userActions";
 
 function Registration () {
 	const navigate = useNavigate();
@@ -22,9 +23,10 @@ function Registration () {
 	const [name, setName] = React.useState('');
 	const inputRef = React.useRef(null);
 
-	const registration = async (e: React.FormEvent<HTMLFormElement>) => {
+	const registration = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
-		dispatch(fetchRegistration({email, password, name}, () => navigate('/', {replace: true})));
+		dispatch(registerUser(email, name, password));
+		// dispatch(fetchRegistration({email, password, name}, () => navigate('/', {replace: true})));
 	};
 
 	const goToLogin = () => {

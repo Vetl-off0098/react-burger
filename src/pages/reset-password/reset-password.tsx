@@ -4,22 +4,31 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import {useNavigate} from "react-router-dom";
 import {fetchResetPassword} from "../../services/async-actions/resetPassword";
 import {useDispatch} from "../../hook/useTypedDispatch";
+import {resetPasswordApi} from "../../utils/burger-api";
 
 function ResetPassword () {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const [password, setPassword] = useState('')
+	const [password, setPassword] = useState('');
+	const [kode, setKode] = React.useState('');
+	const [error, setError] = useState<Error | null>(null);
+	const inputRef = React.useRef(null);
+
 	const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
 			setPassword(e.target.value)
 	};
 
-	const [kode, setKode] = React.useState('');
-	const inputRef = React.useRef(null);
+	const saveNewPass = async (e: React.SyntheticEvent) => {
+		e.preventDefault();
 
-	const saveNewPass = async (e: React.FormEvent<HTMLFormElement>) => {
-			e.preventDefault();
-			dispatch(fetchResetPassword(password, kode, () => navigate('/login', {replace: true})));
+		setError(null);
+		resetPasswordApi({ password, kode })
+			.then(() => {
+				navigate("/login", {replace: true})
+			})
+			.catch((err) => setError(err));
+		// dispatch(fetchResetPassword(password, kode, () => navigate('/login', {replace: true})));
 	};
 
 	const goToLogin = () => {
@@ -58,6 +67,12 @@ function ResetPassword () {
 							/>
 
 							<input type="submit" value={'Сохранить'} className="submitBtn mt-6" />
+
+							{error && (
+								<p className={`${styles.error} text text_type_main-default pb-6`}>
+									{error.message}
+								</p>
+							)}
 						</form>
 					</div>
 

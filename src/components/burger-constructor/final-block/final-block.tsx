@@ -12,6 +12,8 @@ import {useNavigate} from "react-router-dom";
 import {useTypedSelector} from "../../../hook/useTypedSelector";
 import {IIngredient} from "../../../models/ingredient";
 import {useDispatch} from "../../../hook/useTypedDispatch";
+import {setBurgerIngredientsArrayAction} from "../../../services/actions/burgerIngredientsActions";
+import {resetCountAllIngredientsAction} from "../../../services/actions/ingredientsAction";
 
 function FinalBlock() {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ function FinalBlock() {
   const isSuccess = useTypedSelector(state => state.createdOrder.order.isSuccess);
   const orderId = useTypedSelector(state => state.createdOrder.order.orderId);
   const isOpen = useTypedSelector(state => state.createdOrder.order.isOpen);
-  const user = useTypedSelector(state => state.user.user);
+  const user = useTypedSelector(state => state.userAuth.data);
 
   const navigate = useNavigate();
 
@@ -43,15 +45,15 @@ function FinalBlock() {
   }, [burger])
 
   const handleClickCreateOrder = () => {
-    dispatch(isLoadingOrderAction(true));
-
-    if (user) {
-      dispatch(fetchCreateOrder(burger));
-      dispatch(isLoadingOrderAction(false));
-    } else {
-      dispatch(isLoadingOrderAction(false));
-      navigate('/login', {state: burger});
+    if (!user) {
+      navigate("login");
+      return;
     }
+
+    dispatch(isLoadingOrderAction(true));
+    dispatch(fetchCreateOrder(burger));
+    dispatch(setBurgerIngredientsArrayAction([]));
+    dispatch(resetCountAllIngredientsAction());
   }
 
   const closeModal = () => {
@@ -71,7 +73,7 @@ function FinalBlock() {
 
         <Button
           disabled={!burger.find(el => el.type ==='bun')}
-          onClick={() => handleClickCreateOrder()}
+          onClick={handleClickCreateOrder}
           htmlType="button"
           type="primary"
           size="medium"

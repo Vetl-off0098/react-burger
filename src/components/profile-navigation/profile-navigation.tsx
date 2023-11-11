@@ -1,14 +1,15 @@
 import React from "react";
 import styles from "./profile-navigation.module.css";
-import {NavLink} from "react-router-dom";
-import {fetchLogOut} from "../../services/async-actions/logOut";
+import {NavLink, useLocation} from "react-router-dom";
 import {useDispatch} from "../../hook/useTypedDispatch";
+import {logoutUser} from "../../services/actions/userActions";
 
 const ProfileNavigation = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const logOut = () => {
-    dispatch(fetchLogOut())
+    dispatch(logoutUser());
   }
 
   return (
@@ -33,9 +34,12 @@ const ProfileNavigation = () => {
         </div>
       </nav>
 
-      <div className={styles.description}>
+      <div className={`${styles.description} mt-20`}>
         <p className="text text_type_main-small text_color_inactive">
-          В этом разделе вы можете изменить свои персональные данные
+          {location.pathname === '/profile/profile'
+            ? 'В этом разделе вы можете изменить свои персональные данные'
+            : 'В этом разделе вы можете посмотреть свою историю заказов'
+          }
         </p>
       </div>
     </article>

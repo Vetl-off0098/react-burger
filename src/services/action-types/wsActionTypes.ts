@@ -111,14 +111,6 @@ export type TWSActions = IWsConnectionStart
   | IWsGetMessage
   | IWsSendMessage
 
-  | IOrdersConnectionInit
-  | IOrdersConnectionClose
-  | IOrdersConnectionSuccess
-  | IOrdersConnectionClosed
-  | IOrdersConnectionError
-  | IOrdersGetMessage
-  | IOrdersSendMessage
-
   | IFeedConnectionInit
   | IFeedConnectionClose
   | IFeedConnectionSuccess
@@ -126,3 +118,11 @@ export type TWSActions = IWsConnectionStart
   | IFeedConnectionError
   | IFeedConnectionMessage
   | IFeedSendMessage
+
+export type TOrdersActions = IOrdersConnectionInit
+  | IOrdersConnectionClose
+  | IOrdersConnectionSuccess
+  | IOrdersConnectionClosed
+  | IOrdersConnectionError
+  | IOrdersGetMessage
+  | IOrdersSendMessage

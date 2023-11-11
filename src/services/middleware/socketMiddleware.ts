@@ -7,8 +7,7 @@ export const socketMiddleware = (wsActions: TFeedsWsAcions | TOrdersWsAcions): M
     let socket: WebSocket | null;
 
     return next => (action: TWSActions) => {
-      console.log(action)
-      const { dispatch, getState } = store;
+      const { dispatch } = store;
       const { type, payload } = action;
       const {
         wsInit,
@@ -21,31 +20,23 @@ export const socketMiddleware = (wsActions: TFeedsWsAcions | TOrdersWsAcions): M
       } = wsActions;
 
       if (type === wsInit) {
-        console.log(payload)
         socket = new WebSocket(payload);
-        console.log(socket)
       }
       if (socket) {
         socket.onopen = event => {
-          // dispatch(wsConnectionSuccess(event));
-          console.log('socket onopen')
           dispatch({type: onOpen, payload: event});
-          // dispatch({type: 'WS_CONNECTION_SUCCESS', payload: event});
         };
 
         socket.onerror = event => {
           dispatch({type: onError, payload: event});
-          // dispatch({type: 'WS_CONNECTION_ERROR', payload: event});
         };
         socket.onmessage = event => {
           const {data} = event;
           const parsedData = JSON.parse(data);
           dispatch({type: onMessage, payload: {data: parsedData, timestamp: new Date().getTime() / 100}})
-          // dispatch({type: 'WS_GET_MESSAGE', payload: data});
         };
         socket.onclose = event => {
           dispatch({type: onClose, payload: event})
-          // dispatch({type: 'WS_CONNECTION_CLOSED', payload: event});
         };
       }
 

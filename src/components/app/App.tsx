@@ -8,7 +8,6 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import {OnlyAuth} from "../../hoc/RequireAuth";
 import Profile from "../../pages/profile/profile";
-import {fetchUser} from "../../services/async-actions/user";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import {isLoadingAction} from "../../services/actions/isLoadingActions";
@@ -20,6 +19,8 @@ import {useDispatch} from "../../hook/useTypedDispatch";
 import FeedInfo from "../../pages/feed-info/feed-info";
 import ProfileLayout from "../profile-layout/Profile-layout";
 import OrdersProfile from "../../pages/orders-profile/orders-profile";
+import FeedInfoDetails from "../feed-info-details/feed-info-details";
+import {checkUser} from "../../services/actions/userActions";
 
 const App = () => {
   const navigate = useNavigate();
@@ -31,7 +32,8 @@ const App = () => {
   useEffect(() => {
     dispatch(isLoadingAction(true))
     dispatch(fetchIngredients(burger));
-    dispatch(fetchUser());
+
+    dispatch(checkUser());
   }, [dispatch]);
 
   const closeModal = () => {
@@ -44,16 +46,16 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/feed/:feedId" element={<FeedInfo />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registration" element={<Registration />} />
+          <Route path="/feed/:number" element={<FeedInfo />} />
+          <Route path="/login" element={<OnlyAuth onlyUnAuth={true} component={<Login />} />} />
+          <Route path="/registration" element={<OnlyAuth onlyUnAuth={true} component={<Registration />} />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/profile" element={<ProfileLayout />}>
             <Route path="/profile/profile" element={<OnlyAuth component={<Profile />} />} />
             <Route path="/profile/orders" element={<OnlyAuth component={<OrdersProfile />} />} />
           </Route>
-          <Route path="/profile/orders/:id" element={<OnlyAuth component={<FeedInfo />} />} />
+          <Route path="/profile/orders/:number" element={<OnlyAuth component={<FeedInfo />} />} />
           <Route path="/ingredients/:ingredientId" element={
             <IngredientInfo />
           } />
@@ -66,6 +68,20 @@ const App = () => {
             <Modal onClose={closeModal}>
               <IngredientDetails />
             </Modal>
+          } />
+
+          <Route path="/feed/:number" element={
+            <Modal onClose={closeModal}>
+              <FeedInfoDetails />
+            </Modal>
+          } />
+
+          <Route path="/profile/orders/:number" element={
+            <OnlyAuth component={
+              <Modal onClose={closeModal}>
+                <FeedInfoDetails />
+              </Modal>
+            } />
           } />
         </Routes>
       )}

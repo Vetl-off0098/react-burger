@@ -3,6 +3,11 @@ export interface IUser {
   name: string
 }
 
+export type TUser = {
+  email: string,
+  name: string
+}
+
 export interface IUserState {
   user: IUser |null,
   isAuthChecked: boolean,

@@ -3,51 +3,51 @@ import {
   ORDERS_CONNECTION_ERROR,
   ORDERS_CONNECTION_SUCCESS,
   ORDERS_GET_MESSAGE,
-  TWSActions,
+  TOrdersActions,
 } from "../action-types/wsActionTypes";
+import {IOrder} from "../../models/feed";
 
-type TWSState = {
-  error?: Event | null,
-  orders: [],
-  total: number,
-  totalToday: number,
-  isOpen: boolean
-}
+export type TOrdersState = {
+  data: IOrder[];
+  isOpen: boolean;
+  error: unknown;
+};
 
-const initialState:TWSState = {
-  orders: [],
-  total: 0,
-  totalToday: 0,
+const initialState: TOrdersState = {
+  data: [],
   isOpen: false,
-  error: null
-}
+  error: null,
+};
 
-export const ordersReducer = (state = initialState, action: TWSActions) => {
+export const ordersReducer = (state = initialState, action: TOrdersActions): TOrdersState => {
   switch (action.type) {
-    case ORDERS_CONNECTION_SUCCESS:
+    case ORDERS_CONNECTION_SUCCESS: {
       return {
         ...state,
         isOpen: true,
         error: null,
-      }
-    case ORDERS_CONNECTION_ERROR:
+      };
+    }
+    case ORDERS_CONNECTION_ERROR: {
       return {
         ...state,
         error: action.payload,
-      }
-    case ORDERS_CONNECTION_CLOSED:
+      };
+    }
+    case ORDERS_CONNECTION_CLOSED: {
       return {
         ...state,
         isOpen: false,
-      }
-    case ORDERS_GET_MESSAGE:
+      };
+    }
+    case ORDERS_GET_MESSAGE: {
       return {
         ...state,
-        orders: action.payload.data.orders,
-        total: action.payload.data.total,
-        totalToday: action.payload.data.totalToday
-      }
-    default:
+        data: action.payload.data.orders,
+      };
+    }
+    default: {
       return state;
+    }
   }
 }

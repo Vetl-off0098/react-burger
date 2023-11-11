@@ -1,121 +1,47 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import styles from './feed.module.css';
 import {useTypedSelector} from "../../hook/useTypedSelector";
 import FeedOrder from "../../components/feed-order/feed-order";
-import {Link} from "react-router-dom";
-import {socketMiddleware} from "../../services/middleware/socketMiddleware";
-import {wsConnectionClosed, wsConnectionStart} from "../../services/actions/websocketActions";
+import {Link, useLocation} from "react-router-dom";
 import {useDispatch} from "../../hook/useTypedDispatch";
 import {FEED_CONNECTION_CLOSE, FEED_CONNECTION_INIT} from "../../services/action-types/wsActionTypes";
 import {BURGER_API_WSS_FEED} from "../../utils/burger-api";
+import Preloader from "../../components/preloader/Preloader";
+import {IOrder} from "../../models/feed";
 
 const Feed = () => {
-  const {ingredients} = useTypedSelector((state) => state.ingredients);
-
-  interface IOrder {
-    id: string,
-    date: string,
-    name: string,
-    ingredients: Array<string>,
-    price: number
-  }
-
-  const orders: IOrder[] = [
-    {
-      id: '034534',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 560,
-    },
-    {
-      id: '034535',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 480,
-    },
-    {
-      id: '034536',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 480,
-    },
-    {
-      id: '034537',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 480,
-    },
-    {
-      id: '034538',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 480,
-    },
-    {
-      id: '034539',
-      date: '2022-10-10T17:33:32.877Z',
-      name: 'Interstellar бургер',
-      ingredients: [
-        ingredients[0].image_mobile,
-        ingredients[1].image_mobile,
-        ingredients[2].image_mobile,
-        ingredients[3].image_mobile,
-        ingredients[4].image_mobile,
-      ],
-      price: 480,
-    }
-  ];
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type: FEED_CONNECTION_INIT, payload: BURGER_API_WSS_FEED})
+    dispatch({type: FEED_CONNECTION_INIT, payload: BURGER_API_WSS_FEED});
 
     return () => {
-      dispatch({type: FEED_CONNECTION_CLOSE})
+      dispatch({type: FEED_CONNECTION_CLOSE});
     }
-  }, [dispatch])
+  }, [dispatch]);
 
-  const readyOrders: Array<string> = ['034533', '034532', '034530', '034527', '034525'];
-  const inWorkOrders: Array<string> = ['034538', '034541', '034542'];
+  const orders = useTypedSelector((state) => state.feedReducer.orders);
+  const total = useTypedSelector((state) => state.feedReducer.total);
+  const totalToday = useTypedSelector((state) => state.feedReducer.totalToday);
 
-  const allTimeOrders: number = 28752;
-  const todayOrders: number = 138;
+  let readyOrders: Array<string> = [];
+  let inWorkOrders: Array<string> = [];
+
+  useMemo(() => {
+    readyOrders = orders.filter((el: IOrder) => el.status === 'done').map((el: IOrder) => {
+      return el.number;
+    }).slice(0, 25);
+
+    inWorkOrders = orders.filter((el: IOrder) => el.status === 'pending').map((el: IOrder) => {
+      return el.number;
+    }).slice(0, 20);
+  }, [orders]);
+
+  if (!orders.length) {
+    return (<Preloader />);
+  }
 
   return (
     <main className={`${styles.main} container pt-10`}>
@@ -127,23 +53,23 @@ const Feed = () => {
         <div className={styles.ordersBlock}>
           {orders.map((item: IOrder) => (
             <Link
-              key={item.id}
-              to={`/feed/${item.id}`}
-              // state={{ background: location}}
+              key={item._id}
+              to={`/feed/${item.number}`}
+              state={{ background: location}}
             >
-              <FeedOrder order={item} key={item.id}/>
+              <FeedOrder order={item} key={item._id}/>
             </Link>
           ))}
         </div>
 
-        <div className={`${styles.rightBlock} ml-15`}>
+        <div className={`${styles.rightBlock}`}>
           <div className={`${styles.top}`}>
             <div className={`${styles.status} ${styles.ready}`}>
               <h3 className={`text text_type_main-medium`}>
                 Готовы:
               </h3>
 
-              <div className="mt-6">
+              <div className={`mt-6 ${styles.readyOrders}`}>
                 {readyOrders.map((item: string, index) => (
                   <div className={`${styles.readyOrder} text text_type_digits-default`} key={index}>
                     {item}
@@ -173,7 +99,7 @@ const Feed = () => {
             </h3>
 
             <div className={`${styles.ordersCount} text text_type_digits-large mt-6`}>
-              {allTimeOrders}
+              {total}
             </div>
           </div>
 
@@ -183,7 +109,7 @@ const Feed = () => {
             </h3>
 
             <div className={`${styles.ordersCount} text text_type_digits-large mt-6`}>
-              {todayOrders}
+              {totalToday}
             </div>
           </div>
         </div>

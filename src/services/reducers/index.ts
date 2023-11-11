@@ -22,8 +22,12 @@ import {
 	FEED_CONNECTION_SUCCESS, FEED_GET_MESSAGE, FEED_SEND_MESSAGE,
 	ORDERS_CONNECTION_CLOSE, ORDERS_CONNECTION_CLOSED,
 	ORDERS_CONNECTION_ERROR, ORDERS_CONNECTION_INIT,
-	ORDERS_CONNECTION_SUCCESS, ORDERS_GET_MESSAGE, ORDERS_SEND_MESSAGE
+	ORDERS_CONNECTION_SUCCESS, ORDERS_GET_MESSAGE, ORDERS_SEND_MESSAGE, TOrdersActions, TWSActions
 } from "../action-types/wsActionTypes";
+import {orderReducer} from "./order";
+import {TOrderActions} from "../actions/order";
+import {TUserAuthActions} from "../actions/userActions";
+import {userAuthReducer} from "./userAuth";
 
 
 const rootReducer = combineReducers({
@@ -34,7 +38,9 @@ const rootReducer = combineReducers({
 	isLoadingOrder: isLoadingOrderReducer,
 	user: userReducer,
 	feedReducer: feedReducer,
-	ordersReducer: ordersReducer,
+	orders: ordersReducer,
+	order: orderReducer,
+	userAuth: userAuthReducer,
 })
 
 export type TOrdersWsAcions = {
@@ -92,7 +98,23 @@ export type RootState = ReturnType<typeof store.getState>;
 type TRootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<TRootReducerType>
 
-type TApplicationActions = TBurgerAction | TCreatedOrderAction | TIngredientsAction | TIsLoadingAction | TIsLoadingOrderAction | TUserAction;
+type TApplicationActions = TBurgerAction
+	| TCreatedOrderAction
+	| TIngredientsAction
+	| TIsLoadingAction
+	| TIsLoadingOrderAction
+	| TUserAction
+	| TOrderActions
+	| TWSActions
+	| TOrdersActions
+	| TUserAuthActions
+
+export type AppValidThunk<ReturnType = void> = ThunkAction<
+	ReturnType,
+	RootState,
+	unknown,
+	TApplicationActions
+	>;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TApplicationActions>>
 export type AppDispatch = typeof store.dispatch;

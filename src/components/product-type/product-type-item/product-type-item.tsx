@@ -41,9 +41,9 @@ const ProductTypeItem: FC<IProductTypeItemProps> = ({info}) => {
           <h4 className={`text text_type_main-default mt-2 ${styles.name}`}>{info.name}</h4>
 
           {info.count > 0 &&
-          <span className={styles.counter}>
-          <Counter count={info.count} size="default" extraClass="m-1" />
-        </span>
+            <span className={styles.counter}>
+              <Counter count={info.count} size="default" extraClass="m-1" />
+            </span>
           }
         </div>
       </Link>

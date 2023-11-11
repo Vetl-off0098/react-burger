@@ -5,16 +5,35 @@ import {useTypedSelector} from "../../hook/useTypedSelector";
 import {IIngredient} from '../../models/ingredient'
 
 function IngredientDetails() {
+  const initialIngredientState = {
+    _id: '',
+    name: '',
+    type: '',
+    proteins: 0,
+    fat: 0,
+    carbohydrates: 0,
+    calories: 0,
+    price: 0,
+    image: '',
+    image_mobile: '',
+    image_large: '',
+    __v: 0,
+    count: 0,
+    burgerIngredientId: ''
+  };
+
   const ingredients = useTypedSelector(state => state.ingredients.ingredients);
-  const [ingredient, setIngredient] = useState<IIngredient | any>({});
+  const [ingredient, setIngredient] = useState<IIngredient>(initialIngredientState);
   const {ingredientId} = useParams();
 
   useEffect(() => {
     if (ingredients && ingredients.length){
       const item = ingredients.find(el => el._id === ingredientId);
-      setIngredient(item)
+      if (item) {
+        setIngredient(item)
+      }
     }
-  }, [ingredients])
+  }, [ingredients]);
 
   return (
     <>

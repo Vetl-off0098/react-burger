@@ -2,6 +2,7 @@ import React from "react";
 import styles from './feed-info.module.css';
 import {IIngredient} from "../../models/ingredient";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import FeedInfoDetails from "../../components/feed-info-details/feed-info-details";
 
 const FeedInfo = () => {
   interface IOrderInfo {
@@ -105,60 +106,62 @@ const FeedInfo = () => {
 
   return (
     <main className={`${styles.feedInfo}`}>
-      <div className={`${styles.feedInfoWrap}`}>
-        <div className={`${styles.orderId} ${styles.textCenter} text text_type_digits-default`}>
-          #{orderInfo.id}
-        </div>
+      {/*<div className={`${styles.feedInfoWrap}`}>*/}
+      {/*  <div className={`${styles.orderId} ${styles.textCenter} text text_type_digits-default`}>*/}
+      {/*    #{orderInfo.id}*/}
+      {/*  </div>*/}
 
-        <div className={`${styles.nameAndStatus} mt-10`}>
-          <h3 className={`text text_type_main-medium`}>
-            {orderInfo.name}
-          </h3>
+      {/*  <div className={`${styles.nameAndStatus} mt-10`}>*/}
+      {/*    <h3 className={`text text_type_main-medium`}>*/}
+      {/*      {orderInfo.name}*/}
+      {/*    </h3>*/}
 
-          <div className={`${styles.status} text text_type_main-small mt-3`}>
-            {orderInfo.status}
-          </div>
-        </div>
+      {/*    <div className={`${styles.status} text text_type_main-small mt-3`}>*/}
+      {/*      {orderInfo.status}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
 
-        <div className={`${styles.compound} mt-15`}>
-          <h3 className={`text text_type_main-medium`}>
-            Состав:
-          </h3>
+      {/*  <div className={`${styles.compound} mt-15`}>*/}
+      {/*    <h3 className={`text text_type_main-medium`}>*/}
+      {/*      Состав:*/}
+      {/*    </h3>*/}
 
-          <div className={`${styles.ingredientsBlock} mt-6 pr-6`}>
-            {orderInfo.ingredients.map((item: IIngredient) => (
-              <div className={`${styles.ingredient} orderInfo-ingredient`}>
-                <div className={`${styles.imageAndName}`}>
-                  <div className={`${styles.ingredientPicture}`}>
-                    <img src={item.image_mobile} alt='' className={styles.image}/>
-                  </div>
+      {/*    <div className={`${styles.ingredientsBlock} mt-6 pr-6`}>*/}
+      {/*      {orderInfo.ingredients.map((item: IIngredient) => (*/}
+      {/*        <div className={`${styles.ingredient} orderInfo-ingredient`}>*/}
+      {/*          <div className={`${styles.imageAndName}`}>*/}
+      {/*            <div className={`${styles.ingredientPicture}`}>*/}
+      {/*              <img src={item.image_mobile} alt='' className={styles.image}/>*/}
+      {/*            </div>*/}
 
-                  <div className={`text text_type_main-default ml-4`}>
-                    {item.name}
-                  </div>
-                </div>
+      {/*            <div className={`text text_type_main-default ml-4`}>*/}
+      {/*              {item.name}*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
 
-                <div className={`${styles.countAndPrice}`}>
-                  {item.count > 0 && <span className="text text_type_digits-default">{item.count}X</span>}
-                  <span className="text text_type_digits-default">{item.price}</span>
-                  <CurrencyIcon type="primary" />
-                </div>
-              </div>
-            ))}
-          </div>
+      {/*          <div className={`${styles.countAndPrice}`}>*/}
+      {/*            {item.count > 0 && <span className="text text_type_digits-default">{item.count}X</span>}*/}
+      {/*            <span className="text text_type_digits-default">{item.price}</span>*/}
+      {/*            <CurrencyIcon type="primary" />*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      ))}*/}
+      {/*    </div>*/}
 
-          <div className={`${styles.dataAndPrice} mt-10`}>
-            <div className={`text_color_inactive`}>
-              <FormattedDate date={new Date(orderInfo.date)} />
-            </div>
+      {/*    <div className={`${styles.dataAndPrice} mt-10`}>*/}
+      {/*      <div className={`text_color_inactive`}>*/}
+      {/*        <FormattedDate date={new Date(orderInfo.date)} />*/}
+      {/*      </div>*/}
 
-            <div className={styles.priceBlock}>
-              <span className="text text_type_digits-default">{orderInfo.price}</span>
-              <CurrencyIcon type="primary" />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/*      <div className={styles.priceBlock}>*/}
+      {/*        <span className="text text_type_digits-default">{orderInfo.price}</span>*/}
+      {/*        <CurrencyIcon type="primary" />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      <FeedInfoDetails />
     </main>
   )
 }

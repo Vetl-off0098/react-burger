@@ -6,6 +6,9 @@ import {createOrderAction} from "../actions/createdOrderActions";
 import {isLoadingOrderAction} from "../actions/isLoadingOrderActions";
 import {IIngredient} from '../../models/ingredient';
 import {AppDispatch, AppThunk} from "../reducers";
+import {getCookie} from "../../utils/cookie";
+import {fetchWithRefresh, TServerResponse} from "../../utils/burger-api";
+import {TOrder} from "../../models/feed";
 
 export const fetchIngredients: AppThunk = (burger: IIngredient[] | []) => {
 	return function(dispatch: AppDispatch) {
@@ -37,17 +40,23 @@ export const fetchIngredients: AppThunk = (burger: IIngredient[] | []) => {
 	}
 }
 
+type TNewOrderResponse = TServerResponse<{
+	order: TOrder;
+	name: string;
+}>;
+
 export const fetchCreateOrder: AppThunk = (burger: IIngredient[] | []) => {
 	const bun = burger.find((el: IIngredient) => el.type === 'bun');
 
 	return function(dispatch: AppDispatch) {
-		fetch(`${api}/orders`, {
+		fetchWithRefresh<TNewOrderResponse>(`${api}/orders`, {
 			method: 'POST',
 			headers: {
-				"Content-Type": "application/json"
-			},
+				"Content-Type": "application/json",
+				authorization: getCookie("accessToken"),
+			} as HeadersInit,
 			body: JSON.stringify({
-				'ingredients': [
+				ingredients: [
 					bun,
 					bun,
 					...burger.filter((el: IIngredient) => el.type !== 'bun'),
@@ -58,7 +67,6 @@ export const fetchCreateOrder: AppThunk = (burger: IIngredient[] | []) => {
 				})
 			})
 		})
-			.then(data => checkResponse(data))
 			.then(data => {
 				dispatch(createOrderAction({isOpen: true, isSuccess: data.success, orderId: String(data.order.number)}))
 				dispatch(isLoadingOrderAction(false));
