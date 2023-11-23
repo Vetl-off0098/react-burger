@@ -27,7 +27,7 @@ const BurgerConstructor = () => {
   const ingredients = useTypedSelector(state => state.ingredients.ingredients);
 
   const [bun, setBun] = useState<IIngredient | null>(null);
-  const [otherIngrs, setOtherIngr] = useState<Array<IIngredient>>([]);
+  const [otherIngrs, setOtherIngr] = useState<Array<IIngredient> | []>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const [{isHover}, dropTarget] = useDrop({

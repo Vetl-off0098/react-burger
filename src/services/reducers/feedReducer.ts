@@ -4,10 +4,11 @@ import {
   FEED_CONNECTION_SUCCESS, FEED_GET_MESSAGE,
   TWSActions,
 } from "../action-types/wsActionTypes";
+import {TOrder} from "../../models/feed";
 
 type TWSState = {
   error?: Event | null,
-  orders: any[],
+  orders: TOrder[],
   total: number,
   totalToday: number,
   isOpen: boolean
