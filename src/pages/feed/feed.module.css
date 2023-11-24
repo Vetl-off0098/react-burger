@@ -1,0 +1,55 @@
+.main {
+  /*height: calc(100vh - 88px);*/
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+.ordersBlock {
+  width: 608px;
+  max-height: 83vh;
+  overflow-y: scroll;
+}
+
+.ordersBlock::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ordersBlock::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.ordersBlock::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+.rightBlock {
+  min-width: 580px;
+}
+.readyOrders {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /*width: fit-content;*/
+  max-height: 250px;
+  column-gap: 10px;
+  overflow: hidden;
+}
+.readyOrder {
+  color: #00CCCC;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+}
+.status {
+  min-width: 48%;
+  display: inline;
+}
+.ready {
+}
+.inWork {
+
+}
+.ordersCount {
+  text-shadow: 0 0 15px #3333ff;
+}
