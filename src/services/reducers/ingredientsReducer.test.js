@@ -398,7 +398,7 @@ describe('Check ingredientsReducer reducer', () => {
 								},
 						],
 				}
-				expect(ingredientsReducer(defaultState, {type: IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN, payload: {_id: "643d69a5c3f7b9001cfa0941"}})).toEqual({
+				expect(ingredientsReducer(defaultState, {type: IngredientsActionTypes.SET_COUNT_INGREDIENT_BUN, payload: {_id: "643d69a5c3f7b9001cfa093c"}})).toEqual({
 						ingredients: [
 								{
 										_id: "643d69a5c3f7b9001cfa093c",
