@@ -1,6 +1,7 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
+  "homepage": "https://Vetl-off0098.github.io/react-burger",
   "private": true,
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
@@ -29,7 +30,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "./node_modules/.bin/cypress open"
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +60,7 @@
     "@types/react-dom": "^18.2.7",
     "cypress": "^12.4.0",
     "fetch-mock": "^9.11.0",
+    "gh-pages": "^6.1.0",
     "prop-types": "^15.8.1",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4"
