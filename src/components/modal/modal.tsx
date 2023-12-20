@@ -33,7 +33,7 @@ const Modal: FC<IModalProps> = ({ onClose, children }) => {
         <ModalOverlay onClose={onClose}/>
 
         <div className={styles.modalBlock}>
-          <div className={styles.closeModal} onClick={onClose}>
+          <div data-testid="modal-close" className={styles.closeModal} onClick={onClose}>
             <div className={styles.stripeRight}/>
 
             <div className={styles.stripeLeft}/>

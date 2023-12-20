@@ -72,6 +72,7 @@ function FinalBlock() {
         </p>
 
         <Button
+          data-testid="create-order-button"
           disabled={!burger.find(el => el.type ==='bun')}
           onClick={handleClickCreateOrder}
           htmlType="button"

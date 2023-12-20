@@ -113,7 +113,7 @@ const BurgerConstructor = () => {
   }
 
   return(
-    <section ref={dropTarget} className={styles.constructorAndButton}>
+    <section ref={dropTarget} data-testid="hoop" className={styles.constructorAndButton}>
       <div className={styles.burgerConstructor}>
         {bun && Object.entries(bun).length ? <ConstructorElement
           type="top"
