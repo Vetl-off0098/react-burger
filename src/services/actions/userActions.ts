@@ -106,7 +106,7 @@ export type TUserAuthActions =
   | TUserLogoutdAction;
 
 export const checkUser = (): AppValidThunk => (dispatch) => {
-  if (getCookie("accessToken")) {
+  if (getCookie("accessToken")) { // закомментировано для тестов!!!!!
     dispatch(getUser()).finally(() => {
       dispatch({type: AUTH_CHECKED});
     })

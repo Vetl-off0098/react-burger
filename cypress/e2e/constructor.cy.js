@@ -1,18 +1,20 @@
+import {setCookie} from "../../src/utils/cookie";
+
 describe('Application', () => {
   beforeEach(() => {
     cy.visit('/');
 
     cy.intercept('GET', 'api/ingredients', {fixture: 'ingredients.json'}).as('getIngredients');
     cy.intercept('GET', 'api/auth/user', {fixture: 'user.json'}).as('getUser');
-    cy.intercept('POST', 'api/order', {fixture: 'order.json'}).as('postOrder');
+    cy.intercept('POST', 'api/orders', {fixture: 'order.json'}).as('postOrder');
 
-    cy.setCookie('accessToken', 'test-accessToken');
-    cy.setCookie('refreshToken', 'test-refreshToken');
+    setCookie('accessToken', 'test-accessToken');
+    setCookie('refreshToken', 'test-refreshToken');
   });
 
-  afterEach(() => {
-    cy.clearCookies();
-  });
+  // afterEach(() => {
+  //   cy.clearCookies();
+  // });
 
   it('Should open constructor page, load ingredients, open and close ingredient modal', () => {
     cy.wait('@getIngredients');
