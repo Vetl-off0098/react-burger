@@ -6,7 +6,7 @@ const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 export const BURGER_API_WSS_FEED: string = "wss://norma.nomoreparties.space/orders/all";
 export const BURGER_API_WSS_ORDERS = "wss://norma.nomoreparties.space/orders";
 
-const checkResponse = <T>(res: Response): Promise<T> => {
+export const checkResponse = <T>(res: Response): Promise<T> => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 

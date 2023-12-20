@@ -26,6 +26,7 @@ const ProductTypeItem: FC<IProductTypeItemProps> = ({info}) => {
         key={ingredientId}
         to={`/ingredients/${ingredientId}`}
         state={{ background: location}}
+        data-testid={`ingredient-${ingredientId}`}
       >
         <div
           ref={dragRef}

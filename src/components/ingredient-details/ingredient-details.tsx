@@ -37,12 +37,12 @@ function IngredientDetails() {
 
   return (
     <>
-      <span className="text text_type_main-large">Детали ингредиента</span>
+      <span data-testid="ingredient-details-header" className="text text_type_main-large">Детали ингредиента</span>
 
       <div className={styles.innerModal}>
         <img src={ingredient.image} alt='' className={styles.imageModal}/>
 
-        <div className="text text_type_main-medium mt-4">{ingredient.name}</div>
+        <div data-testid="ingredient-details-name" className="text text_type_main-medium mt-4">{ingredient.name}</div>
 
         <div className={styles.PFC}>
           <div className="">

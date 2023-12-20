@@ -14,7 +14,7 @@ const Main = () => {
     <>
       {!isLoading && ingredients.length ? (<div className={`${styles.Main}`}>
         <main className={`${styles.contentBlock} container mt-10` }>
-          <h1 className="text text_type_main-large">Соберите бургер</h1>
+          <h1 data-testid="main-header" className="text text_type_main-large">Соберите бургер</h1>
 
           <DndProvider backend={HTML5Backend}>
             <section className={`mt-5 ${styles.ingredientsAndConstructor}`}>
